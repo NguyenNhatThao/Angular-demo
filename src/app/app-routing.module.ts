@@ -5,7 +5,9 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () =>
-      import('./components/dashboard.module').then((dc) => dc.DashboardModule),
+      import('./components/screen-management.module').then(
+        (dc) => dc.ScreenManagementModule
+      ),
   },
 ];
 

@@ -1,0 +1,17 @@
+<div class="container-fluid bg-light">
+  <div class="card border-secondary mb-3">
+    <div fxLayout="row">
+      <h3 class="card-title">Employee Management</h3>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+      <div fxFlex="50" style="display: flex;">
+        <button type="button" style="flex-grow: 1;" (click)='navigate("student")'
+          data-link="/dashboard/student">Student</button>
+      </div>
+      <div fxFlex="50" style="display: flex;">
+        <button type="button" style="flex-grow: 1;" (click)='navigate("teacher")'
+          data-link="/dashboard/teacher">Teacher</button>
+      </div>
+    </div>
+  </div>
+</div>
