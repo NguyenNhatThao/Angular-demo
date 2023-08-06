@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: 'dashboard',
     loadChildren: () =>
-      import('./components/screen-management.module').then(
-        (dc) => dc.ScreenManagementModule
+      import('./modules/dashboard/dashboard.module').then(
+        (dm) => dm.DashboardModule
       ),
   },
 ];

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { EmployeeModule } from '../employee/employee.module';
-import { DashboardScreenComponent } from './dashboard-screen/dashboard-screen.component';
+import { DashboardScreenComponent } from './pages/dashboard-screen/dashboard-screen.component';
+import { DashboardRoutingRoutingModule } from './dashboard-routing.module';
 
 @NgModule({
-  imports: [CommonModule, EmployeeModule, FlexLayoutModule],
+  imports: [CommonModule, FlexLayoutModule, DashboardRoutingRoutingModule],
   declarations: [DashboardScreenComponent],
   exports: [],
 })
