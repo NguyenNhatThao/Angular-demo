@@ -9,8 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class StudentComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
-
-  displayedColumns: string[] = ['id', 'name', 'age'];
+  displayedColumns: string[] = ['id', 'name', 'age', 'score'];
+  totalRecords = 0;
 
   constructor(private studentService: StudentService) {}
 
@@ -18,6 +18,7 @@ export class StudentComponent implements OnInit {
     this.studentService.getData().subscribe((studentList) => {
       if (studentList) {
         this.dataSource.data = studentList;
+        // this.totalRecords = studentList.size();
       }
     });
   }
