@@ -26,7 +26,8 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToStudentDetail(row.id, row.name)" focusColumn
+      [highlightColor]="'green'">
     </mat-row>
   </mat-table>
   <!-- <mat-paginator class="paginator" [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"

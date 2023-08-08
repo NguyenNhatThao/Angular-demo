@@ -6,6 +6,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-display-list-employee',
@@ -19,9 +20,17 @@ export class DisplayListEmployeeComponent implements OnInit {
 
   pageSize = 2;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+
+  goToStudentDetail(id: number, name: String) {
+    this.router.navigate(['/dashboard/student-detail/', id], {
+      queryParams: {
+        name,
+      },
+    });
+  }
 
   // onPageChange(event: any) {
   //   this.pageSize = event.pageSize;

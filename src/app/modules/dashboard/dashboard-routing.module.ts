@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { DashboardScreenComponent } from './pages/dashboard-screen/dashboard-screen.component';
 
 const routes: Routes = [
@@ -9,18 +8,9 @@ const routes: Routes = [
     component: DashboardScreenComponent,
   },
   {
-    path: 'student',
+    path: '',
     loadChildren: () =>
-      import('../employee/pages/student/student.module').then(
-        (sm) => sm.StudentModule
-      ),
-  },
-  {
-    path: 'teacher',
-    loadChildren: () =>
-      import('../employee/pages/teacher/teacher.module').then(
-        (tm) => tm.TeacherModule
-      ),
+      import('../employee/employee.module').then((em) => em.EmployeeModule),
   },
 ];
 
