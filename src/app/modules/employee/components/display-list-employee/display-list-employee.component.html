@@ -1,36 +1,43 @@
 <div fxLayout="row" fxLayoutAlign="space-around center">
-  <mat-table style="width: 100%;" [dataSource]="dataSource">
+  <mat-table style="width: 100%" [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-      <mat-cell *matCellDef="let data">
-        {{data.id|| '-'}} </mat-cell>
+      <mat-cell *matCellDef="let data"> {{ data.id || "-" }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let data"> {{data.name ||
-        '-'}}
-      </mat-cell>
+      <mat-cell *matCellDef="let data"> {{ data.name || "-" }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="age">
       <mat-header-cell *matHeaderCellDef> Age </mat-header-cell>
-      <mat-cell *matCellDef="let data">
-        {{data.age || '-'}} </mat-cell>
+      <mat-cell *matCellDef="let data"> {{ data.age || "-" }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="score">
       <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
       <mat-cell *matCellDef="let data">
-        {{(data.score | scoreStatusPipe) || '-'}} </mat-cell>
+        {{ (data.score | scoreStatusPipe) || "-" }}
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToStudentDetail(row.id, row.name)" focusColumn
-      [highlightColor]="'green'">
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="goToStudentDetail(row.id, row.name)"
+      focusColumn
+      [highlightColor]="'green'"
+    >
     </mat-row>
   </mat-table>
-  <!-- <mat-paginator class="paginator" [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
-    [pageSizeOptions]="[2,3,4,5]" aria-label="Select page">
-  </mat-paginator> -->
 </div>
+<mat-paginator
+  class="paginator"
+  [length]="totalRecords"
+  [pageSize]="pageSize"
+  (page)="onPageChange($event)"
+  [pageSizeOptions]="[2, 3, 4, 5]"
+  aria-label="Select page"
+>
+</mat-paginator>

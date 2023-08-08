@@ -1,2 +1,6 @@
-<app-display-list-employee [displayedColumns]="displayedColumns" [dataSource]="dataSource"
-  [totalRecords]="totalRecords"></app-display-list-employee>
+<app-display-list-employee
+  [displayedColumns]="displayedColumns"
+  [dataSource]="dataSource"
+  [totalRecords]="totalRecords"
+  (onSelectPage)="onPageChange($event)"
+></app-display-list-employee>

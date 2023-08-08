@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/common/shared.module';
 import { DisplayListEmployeeComponent } from './components/display-list-employee/display-list-employee.component';
 import { StudentComponent } from './pages/student/student.component';
@@ -23,7 +22,6 @@ const routes: Routes = [
   providers: [StudentService],
   imports: [
     FlexLayoutModule,
-    HttpClientModule,
     SharedModule,
     RouterModule.forChild(routes),
   ],

@@ -32,11 +32,12 @@ export class DisplayListEmployeeComponent implements OnInit {
     });
   }
 
-  // onPageChange(event: any) {
-  //   this.pageSize = event.pageSize;
-  //   this.onSelectPage.emit({
-  //     pageIndex: event.pageIndex,
-  //     pageSize: this.pageSize,
-  //   });
-  // }
+  onPageChange(event: any) {
+    this.pageSize = event.pageSize;
+    this.onSelectPage.emit({
+      pageIndex: event.pageIndex,
+      pageSize: this.pageSize,
+      previousPageIndex: event.previousPageIndex,
+    });
+  }
 }
