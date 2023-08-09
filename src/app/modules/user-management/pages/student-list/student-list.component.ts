@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { StudentService } from './student.service';
+import { StudentListService } from './student-list.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-student',
-  templateUrl: './student.component.html',
-  styleUrls: ['./student.component.scss'],
+  selector: 'app-student-list',
+  templateUrl: './student-list.component.html',
+  styleUrls: ['./student-list.component.scss'],
 })
 export class StudentComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
@@ -16,7 +16,7 @@ export class StudentComponent implements OnInit {
   listStudent: any;
   listClass: any;
 
-  constructor(private studentService: StudentService) {}
+  constructor(private studentService: StudentListService) {}
 
   ngOnInit() {
     forkJoin([

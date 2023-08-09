@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class StudentService {
+export class StudentListService {
   private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}

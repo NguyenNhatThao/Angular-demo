@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardScreenComponent } from './pages/dashboard-screen/dashboard-screen.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardScreenComponent,
+    component: DashboardComponent,
   },
   {
-    path: '',
+    path: 'user-management',
     loadChildren: () =>
-      import('../employee/employee.module').then((em) => em.EmployeeModule),
+      import('../user-management/user-management.module').then((em) => em.UserManagementModule),
   },
 ];
 

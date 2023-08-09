@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ScoreStatusPipe } from './pipes/score.pipe';
 import { FocusDirective } from './directives/focus-directive';
 import { MatSelectModule } from '@angular/material/select';
@@ -17,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 const materialLib = [
   MatPaginatorModule,
@@ -37,8 +37,8 @@ const materialLib = [
 ];
 
 @NgModule({
-  declarations: [ScoreStatusPipe, FocusDirective],
+  declarations: [ScoreStatusPipe, FocusDirective, UserListComponent],
   imports: [...materialLib],
-  exports: [...materialLib, ScoreStatusPipe, FocusDirective],
+  exports: [...materialLib, ScoreStatusPipe, FocusDirective, UserListComponent],
 })
 export class SharedModule {}

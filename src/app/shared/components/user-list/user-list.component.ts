@@ -4,19 +4,17 @@ import {
   Input,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-display-list-employee',
-  templateUrl: './display-list-employee.component.html',
-  styleUrls: ['./display-list-employee.component.scss'],
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss'],
 })
-export class DisplayListEmployeeComponent implements OnInit {
+export class UserListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @Input() displayedColumns: String[] = [];
   @Input() dataSource: any;
@@ -33,7 +31,7 @@ export class DisplayListEmployeeComponent implements OnInit {
   }
 
   goToStudentDetail(id: number, name: String) {
-    this.router.navigate(['/dashboard/student-detail/', id], {
+    this.router.navigate(['/dashboard/user-management/student-detail/', id], {
       queryParams: {
         name,
       },
