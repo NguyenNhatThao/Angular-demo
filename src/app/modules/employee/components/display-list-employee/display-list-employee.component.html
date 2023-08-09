@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="space-around center">
-  <mat-table style="width: 100%" [dataSource]="dataSource">
+  <mat-table matSort style="width: 100%" [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell *matCellDef="let data"> {{ data.id || "-" }} </mat-cell>
@@ -28,6 +28,6 @@
     </mat-row>
   </mat-table>
 </div>
-<mat-paginator #myPaginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
+<mat-paginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
   [pageSizeOptions]="pageSizeOptions" aria-label="Select page" showFirstLastButtons>
 </mat-paginator>

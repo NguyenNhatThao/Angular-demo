@@ -1,0 +1,36 @@
+{
+  "student": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "age": 25,
+      "score": 1
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "age": 30,
+      "score": 8
+    },
+    {
+      "id": 3,
+      "name": "Thomas Edison",
+      "age": 27,
+      "score": -2
+    }
+  ],
+  "class": [
+    {
+      "subject": "math",
+      "students": ["John Doe", "Jane Smith"]
+    },
+    {
+      "subject": "sport",
+      "students": ["John Doe", "Thomas Edison"]
+    },
+    {
+      "subject": "math",
+      "students": ["Jane Smith"]
+    }
+  ]
+}

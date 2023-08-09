@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./display-list-employee.component.scss'],
 })
 export class DisplayListEmployeeComponent implements OnInit {
-  @ViewChild('myPaginator') paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   @Input() displayedColumns: String[] = [];
   @Input() dataSource: any;
   @Input() totalRecords = 0;
@@ -27,7 +28,9 @@ export class DisplayListEmployeeComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dataSource.sort = this.sort;
+  }
 
   goToStudentDetail(id: number, name: String) {
     this.router.navigate(['/dashboard/student-detail/', id], {
