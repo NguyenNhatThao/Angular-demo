@@ -5,20 +5,25 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-display-list-employee',
   templateUrl: './display-list-employee.component.html',
+  styleUrls: ['./display-list-employee.component.scss'],
 })
 export class DisplayListEmployeeComponent implements OnInit {
+  @ViewChild('myPaginator') paginator!: MatPaginator;
   @Input() displayedColumns: String[] = [];
   @Input() dataSource: any;
   @Input() totalRecords = 0;
   @Output() onSelectPage = new EventEmitter<any>();
 
   pageSize = 2;
+  pageSizeOptions = [2, 3, 4, 15];
 
   constructor(private router: Router) {}
 

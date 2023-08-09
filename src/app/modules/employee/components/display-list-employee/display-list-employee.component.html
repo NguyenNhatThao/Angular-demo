@@ -23,21 +23,11 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row
-      *matRowDef="let row; columns: displayedColumns"
-      (click)="goToStudentDetail(row.id, row.name)"
-      focusColumn
-      [highlightColor]="'green'"
-    >
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="goToStudentDetail(row.id, row.name)" focusColumn
+      [highlightColor]="'green'">
     </mat-row>
   </mat-table>
 </div>
-<mat-paginator
-  class="paginator"
-  [length]="totalRecords"
-  [pageSize]="pageSize"
-  (page)="onPageChange($event)"
-  [pageSizeOptions]="[2, 3, 4, 5]"
-  aria-label="Select page"
->
+<mat-paginator #myPaginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
+  [pageSizeOptions]="pageSizeOptions" aria-label="Select page" showFirstLastButtons>
 </mat-paginator>

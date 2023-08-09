@@ -20,11 +20,7 @@ const routes: Routes = [
 ];
 @NgModule({
   providers: [StudentService],
-  imports: [
-    FlexLayoutModule,
-    SharedModule,
-    RouterModule.forChild(routes),
-  ],
+  imports: [FlexLayoutModule, SharedModule, RouterModule.forChild(routes)],
   declarations: [
     DisplayListEmployeeComponent,
     StudentComponent,
