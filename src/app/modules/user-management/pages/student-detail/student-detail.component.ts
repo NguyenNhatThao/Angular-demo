@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './student-detail.component.html',
   styleUrls: ['./student-detail.component.scss'],
 })
-export class StudentDetailComponent implements OnInit {
+export class StudentDetail implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {

@@ -8,7 +8,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './student-list.component.html',
   styleUrls: ['./student-list.component.scss'],
 })
-export class StudentComponent implements OnInit {
+export class StudentList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'age', 'score'];
   totalRecords = 0;
