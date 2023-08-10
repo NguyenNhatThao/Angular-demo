@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { LastClickDirective } from './directives/last-click-directive';
 
 const materialLib = [
   MatPaginatorModule,
@@ -37,8 +38,19 @@ const materialLib = [
 ];
 
 @NgModule({
-  declarations: [ScoreStatusPipe, FocusDirective, UserListComponent],
+  declarations: [
+    ScoreStatusPipe,
+    FocusDirective,
+    UserListComponent,
+    LastClickDirective,
+  ],
   imports: [...materialLib],
-  exports: [...materialLib, ScoreStatusPipe, FocusDirective, UserListComponent],
+  exports: [
+    ...materialLib,
+    ScoreStatusPipe,
+    FocusDirective,
+    UserListComponent,
+    LastClickDirective,
+  ],
 })
 export class SharedModule {}

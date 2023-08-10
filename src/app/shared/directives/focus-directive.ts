@@ -1,12 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  OnChanges,
-  Input,
-  Renderer2,
-  SimpleChanges,
-  HostListener,
-} from '@angular/core';
+import { Directive, ElementRef, Input, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[focusColumn]',

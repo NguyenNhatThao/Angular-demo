@@ -15,4 +15,11 @@ export class StudentListService {
   getClass() {
     return this.http.get<any[]>(`${this.baseUrl}/class`);
   }
+
+  getPagedData(pageIndex: number, pageSize: number): Observable<any> {
+    const startIndex = pageIndex * pageSize;
+    return this.http.get<any[]>(
+      `${this.baseUrl}/student?_start=${startIndex}&_limit=${pageSize}`
+    );
+  }
 }

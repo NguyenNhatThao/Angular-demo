@@ -22,8 +22,15 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="class">
+      <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
+      <mat-cell *matCellDef="let data">
+        {{ data.class || "-" }}
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="goToStudentDetail(row.id, row.name)" focusColumn
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="getUserDetail(row.id, row.name)" focusColumn
       [highlightColor]="'green'">
     </mat-row>
   </mat-table>

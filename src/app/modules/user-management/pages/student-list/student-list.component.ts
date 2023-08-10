@@ -10,9 +10,9 @@ import { forkJoin } from 'rxjs';
 })
 export class StudentList implements OnInit {
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'name', 'age', 'score'];
+  displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class'];
   totalRecords = 0;
-  pageSize = 2;
+  pageSize = 1;
   listStudent: any;
   listClass: any;
 
@@ -25,49 +25,31 @@ export class StudentList implements OnInit {
     ]).subscribe((res: any) => {
       if (res) {
         this.listStudent = res[0];
-        this.dataSource.data = res[0].slice(0, this.pageSize);
-        this.totalRecords = res[0].length;
         this.listClass = res[1];
+        this.totalRecords = res[0].length;
+        this.onPageChange({ pageIndex: 0, pageSize: this.pageSize });
         this.updateClassNumber();
       }
     });
-    // this.studentService.getStudent().subscribe((studentList) => {
-    //   if (studentList) {
-    //     this.listStudent = studentList;
-    //     this.dataSource.data = studentList.slice(0, this.pageSize);
-    //     this.totalRecords = studentList.length;
-    //   }
-    // });
-    // this.studentService.getClass().subscribe((classList) => {
-    //   this.listClass = classList;
-    // });
   }
 
   onPageChange(event: any) {
-    this.studentService.getStudent().subscribe((studentList) => {
-      if (studentList) {
-        if (event.previousPageIndex < event.pageIndex) {
-          this.getRecords(studentList, event.pageIndex + 1, event);
-        } else {
-          this.getRecords(studentList, event.pageIndex, event);
-        }
-      }
-    });
-  }
-
-  getRecords(studentList: any, startIndex: number, event: any) {
-    if (event.pageIndex + event.pageSize < this.totalRecords) {
-      this.dataSource.data = studentList.slice(
-        startIndex,
-        event.pageIndex + event.pageSize
-      );
-    } else {
-      this.dataSource.data = studentList.slice(startIndex, this.totalRecords);
-    }
+    this.studentService
+      .getPagedData(event.pageIndex, event.pageSize)
+      .subscribe((res) => {
+        this.dataSource.data = res;
+      });
   }
 
   updateClassNumber() {
-    console.log(this.listClass);
-    console.log(this.listStudent);
+    this.listStudent.forEach((theStudent: any) => {
+      let numberClassOfStudent = 0;
+      this.listClass.forEach((theClass: any) => {
+        if (theClass.students.indexOf(theStudent.name) > -1) {
+          numberClassOfStudent++;
+        }
+      });
+      theStudent.class = numberClassOfStudent;
+    });
   }
 }

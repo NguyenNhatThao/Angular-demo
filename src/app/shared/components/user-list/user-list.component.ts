@@ -18,11 +18,11 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @Input() displayedColumns: String[] = [];
   @Input() dataSource: any;
-  @Input() totalRecords = 0;
+  @Input() totalRecords: any;
   @Output() onSelectPage = new EventEmitter<any>();
 
-  pageSize = 2;
-  pageSizeOptions = [2, 3, 4, 15];
+  pageSize = 1;
+  pageSizeOptions = [1, 2, 3, 4, 15];
 
   constructor(private router: Router) {}
 
@@ -30,7 +30,7 @@ export class UserListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  goToStudentDetail(id: number, name: String) {
+  getUserDetail(id: number, name: String) {
     this.router.navigate(['/dashboard/user-management/student-detail/', id], {
       queryParams: {
         name,

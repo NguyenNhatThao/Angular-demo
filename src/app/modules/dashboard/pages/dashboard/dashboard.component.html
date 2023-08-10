@@ -5,20 +5,12 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
       <div fxFlex="50" style="display: flex">
-        <button
-          type="button"
-          style="flex-grow: 1"
-          (click)="navigate('student')"
-        >
+        <button type="button" style="flex-grow: 1" lastClickDirec (lastClick)="navigate('student')">
           Student
         </button>
       </div>
       <div fxFlex="50" style="display: flex">
-        <button
-          type="button"
-          style="flex-grow: 1"
-          (click)="navigate('teacher')"
-        >
+        <button type="button" style="flex-grow: 1" lastClickDirec (lastClick)="navigate('student')">
           Teacher
         </button>
       </div>
