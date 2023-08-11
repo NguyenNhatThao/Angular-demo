@@ -1,3 +1,2 @@
-<p>
-  teacher works!
-</p>
+<app-user-list [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
+  (onSelectPage)="onPageChange($event)" [role]="'teacher'"></app-user-list>

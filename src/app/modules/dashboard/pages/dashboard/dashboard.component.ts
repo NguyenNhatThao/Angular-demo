@@ -12,6 +12,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {}
 
   navigate(navigateTo: String) {
-    this.router.navigate([`dashboard/user-management/${navigateTo}`]);
+    console.log('abcd');
+
+    this.router.navigate([`/user-management/${navigateTo}`]);
   }
 }

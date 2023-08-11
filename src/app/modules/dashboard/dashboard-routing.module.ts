@@ -7,11 +7,6 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
   },
-  {
-    path: 'user-management',
-    loadChildren: () =>
-      import('../user-management/user-management.module').then((em) => em.UserManagementModule),
-  },
 ];
 
 @NgModule({

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class StudentListService {
+export class UserManagementService {
   private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
@@ -16,10 +16,14 @@ export class StudentListService {
     return this.http.get<any[]>(`${this.baseUrl}/class`);
   }
 
-  getPagedData(pageIndex: number, pageSize: number): Observable<any> {
+  getPagedData(
+    type: string,
+    pageIndex: number,
+    pageSize: number
+  ): Observable<any> {
     const startIndex = pageIndex * pageSize;
     return this.http.get<any[]>(
-      `${this.baseUrl}/student?_start=${startIndex}&_limit=${pageSize}`
+      `${this.baseUrl}/${type}?_start=${startIndex}&_limit=${pageSize}`
     );
   }
 }

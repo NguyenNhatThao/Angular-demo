@@ -21,16 +21,19 @@
   ],
   "class": [
     {
+      "id": 1,
       "subject": "math",
-      "students": ["John Doe", "Jane Smith"]
+      "students": [1, 2]
     },
     {
+      "id": 2,
       "subject": "sport",
-      "students": ["John Doe", "Thomas Edison"]
+      "students": [1, 3]
     },
     {
+      "id": 3,
       "subject": "math",
-      "students": ["Jane Smith"]
+      "students": [2]
     }
   ]
 }

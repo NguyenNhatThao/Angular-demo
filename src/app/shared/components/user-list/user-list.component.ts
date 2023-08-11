@@ -18,11 +18,12 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: any;
-  @Input() totalRecords: any;
+  @Input() totalRecords = 0;
+  @Input() role = 'teacher';
   @Output() onSelectPage = new EventEmitter<any>();
 
   pageSize = 1;
-  pageSizeOptions = [1, 2, 3, 4, 15];
+  pageSizeOptions = [1, 2, 3, 4, 10];
 
   constructor(private router: Router) {}
 
@@ -31,7 +32,7 @@ export class UserListComponent implements OnInit {
   }
 
   getUserDetail(id: number, name: String) {
-    this.router.navigate(['/dashboard/user-management/student-detail/', id], {
+    this.router.navigate(['/user-management/student-detail/', id], {
       queryParams: {
         name,
       },
@@ -40,6 +41,8 @@ export class UserListComponent implements OnInit {
 
   onPageChange(event: any) {
     this.pageSize = event.pageSize;
+    console.log('index: ', event.pageIndex);
+
     this.onSelectPage.emit({
       pageIndex: event.pageIndex,
       pageSize: this.pageSize,

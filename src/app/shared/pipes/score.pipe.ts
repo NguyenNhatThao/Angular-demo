@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'scoreStatusPipe',
 })
 export class ScoreStatusPipe implements PipeTransform {
-  transform(value: number, args?: any[]): String {
+  transform(value: number): String {
     if (value >= 0 && value < 5) {
       return value.toString() + ' (Fail)';
     } else if (value >= 5 && value <= 10) {

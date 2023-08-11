@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { StudentListService } from './student-list.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin } from 'rxjs';
+import { UserManagementService } from '../../user-management.service';
 
 @Component({
   selector: 'app-student-list',
@@ -15,12 +15,12 @@ export class StudentList implements OnInit {
   pageSize = 1;
   listClass: any;
 
-  constructor(private studentService: StudentListService) {}
+  constructor(private userManagementService: UserManagementService) {}
 
   ngOnInit() {
     forkJoin([
-      this.studentService.getStudent(),
-      this.studentService.getClass(),
+      this.userManagementService.getStudent(),
+      this.userManagementService.getClass(),
     ]).subscribe((res: any) => {
       if (res) {
         this.listClass = res[1];
@@ -31,8 +31,8 @@ export class StudentList implements OnInit {
   }
 
   onPageChange(event: any) {
-    this.studentService
-      .getPagedData(event.pageIndex, event.pageSize)
+    this.userManagementService
+      .getPagedData('student', event.pageIndex, event.pageSize)
       .subscribe((res) => {
         this.dataSource.data = res;
         this.updateClassNumber();
@@ -43,7 +43,7 @@ export class StudentList implements OnInit {
     this.dataSource.data.forEach((theStudent: any) => {
       let numberClassOfStudent = 0;
       this.listClass.forEach((theClass: any) => {
-        if (theClass.students.indexOf(theStudent.name) > -1) {
+        if (theClass.students.indexOf(theStudent.id) > -1) {
           numberClassOfStudent++;
         }
       });
