@@ -18,6 +18,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { LastClickDirective } from './directives/last-click-directive';
+import { CommonModule } from '@angular/common';
 
 const materialLib = [
   MatPaginatorModule,
@@ -44,7 +45,7 @@ const materialLib = [
     UserListComponent,
     LastClickDirective,
   ],
-  imports: [...materialLib],
+  imports: [...materialLib, CommonModule],
   exports: [
     ...materialLib,
     ScoreStatusPipe,

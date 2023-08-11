@@ -1,40 +1,29 @@
 <div fxLayout="row" fxLayoutAlign="space-around center">
   <mat-table matSort style="width: 100%" [dataSource]="dataSource">
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-      <mat-cell *matCellDef="let data"> {{ data.id || "-" }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let data"> {{ data.name || "-" }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="age">
-      <mat-header-cell *matHeaderCellDef> Age </mat-header-cell>
-      <mat-cell *matCellDef="let data"> {{ data.age || "-" }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="score">
-      <mat-header-cell *matHeaderCellDef> Score </mat-header-cell>
-      <mat-cell *matCellDef="let data">
-        {{ (data.score | scoreStatusPipe) || "-" }}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="class">
-      <mat-header-cell *matHeaderCellDef> Class </mat-header-cell>
-      <mat-cell *matCellDef="let data">
-        {{ data.class || "-" }}
-      </mat-cell>
+    <ng-container
+      *ngFor="let column of displayedColumns"
+      [matColumnDef]="column"
+    >
+      <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+      <mat-cell *matCellDef="let data">{{ data[column] }}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="getUserDetail(row.id, row.name)" focusColumn
-      [highlightColor]="'green'">
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="getUserDetail(row.id, row.name)"
+      focusColumn
+      [highlightColor]="'green'"
+    >
     </mat-row>
   </mat-table>
 </div>
-<mat-paginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
-  [pageSizeOptions]="pageSizeOptions" aria-label="Select page" showFirstLastButtons>
+<mat-paginator
+  [length]="totalRecords"
+  [pageSize]="pageSize"
+  (page)="onPageChange($event)"
+  [pageSizeOptions]="pageSizeOptions"
+  aria-label="Select page"
+  showFirstLastButtons
+>
 </mat-paginator>

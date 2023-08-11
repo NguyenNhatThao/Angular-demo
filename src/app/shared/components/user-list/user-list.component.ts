@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class UserListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
-  @Input() displayedColumns: String[] = [];
+  @Input() displayedColumns: string[] = [];
   @Input() dataSource: any;
   @Input() totalRecords: any;
   @Output() onSelectPage = new EventEmitter<any>();

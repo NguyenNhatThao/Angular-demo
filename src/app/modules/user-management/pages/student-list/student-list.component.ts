@@ -13,7 +13,6 @@ export class StudentList implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class'];
   totalRecords = 0;
   pageSize = 1;
-  listStudent: any;
   listClass: any;
 
   constructor(private studentService: StudentListService) {}
@@ -24,11 +23,9 @@ export class StudentList implements OnInit {
       this.studentService.getClass(),
     ]).subscribe((res: any) => {
       if (res) {
-        this.listStudent = res[0];
         this.listClass = res[1];
         this.totalRecords = res[0].length;
         this.onPageChange({ pageIndex: 0, pageSize: this.pageSize });
-        this.updateClassNumber();
       }
     });
   }
@@ -38,11 +35,12 @@ export class StudentList implements OnInit {
       .getPagedData(event.pageIndex, event.pageSize)
       .subscribe((res) => {
         this.dataSource.data = res;
+        this.updateClassNumber();
       });
   }
 
   updateClassNumber() {
-    this.listStudent.forEach((theStudent: any) => {
+    this.dataSource.data.forEach((theStudent: any) => {
       let numberClassOfStudent = 0;
       this.listClass.forEach((theClass: any) => {
         if (theClass.students.indexOf(theStudent.name) > -1) {
