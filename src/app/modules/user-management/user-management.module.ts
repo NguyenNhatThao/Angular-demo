@@ -6,10 +6,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { UserManagementRoutingModule } from './user-management-routing.module';
 import { TeacherList } from './pages/teacher-list/teacher-list.component';
 import { UserManagementService } from './user-management.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   providers: [UserManagementService],
-  imports: [FlexLayoutModule, SharedModule, UserManagementRoutingModule],
+  imports: [ReactiveFormsModule, CommonModule, FlexLayoutModule, SharedModule, UserManagementRoutingModule],
   declarations: [StudentList, TeacherList, StudentDetail],
   exports: [],
 })

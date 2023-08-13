@@ -10,7 +10,7 @@ import { forkJoin } from 'rxjs';
 })
 export class TeacherList implements OnInit {
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'subject', 'list', 'action'];
+  displayedColumns: string[] = ['id', 'subject', 'list'];
   totalRecords = 0;
   pageSize = 1;
   listStudent: any;
@@ -19,8 +19,8 @@ export class TeacherList implements OnInit {
 
   ngOnInit() {
     forkJoin([
-      this.UserManagementService.getStudent(),
-      this.UserManagementService.getClass(),
+      this.UserManagementService.getAllStudent(),
+      this.UserManagementService.getAllClass(),
     ]).subscribe((res: any) => {
       if (res) {
         this.listStudent = res[0];

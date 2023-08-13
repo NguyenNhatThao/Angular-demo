@@ -10,7 +10,7 @@ import { UserManagementService } from '../../user-management.service';
 })
 export class StudentList implements OnInit {
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class'];
+  displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
   totalRecords = 0;
   pageSize = 1;
   listClass: any;
@@ -19,8 +19,8 @@ export class StudentList implements OnInit {
 
   ngOnInit() {
     forkJoin([
-      this.userManagementService.getStudent(),
-      this.userManagementService.getClass(),
+      this.userManagementService.getAllStudent(),
+      this.userManagementService.getAllClass(),
     ]).subscribe((res: any) => {
       if (res) {
         this.listClass = res[1];

@@ -4,9 +4,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,11 +13,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  @ViewChild(MatSort) sort!: MatSort;
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: any;
   @Input() totalRecords = 0;
-  @Input() role = 'teacher';
+  @Input() role = '';
   @Output() onSelectPage = new EventEmitter<any>();
 
   pageSize = 1;
@@ -27,22 +24,14 @@ export class UserListComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    this.dataSource.sort = this.sort;
-  }
+  ngOnInit() {}
 
-  getUserDetail(id: number, name: String) {
-    this.router.navigate(['/user-management/student-detail/', id], {
-      queryParams: {
-        name,
-      },
-    });
+  getUserDetail(id: number) {
+    this.router.navigate(['/user-management/student-detail/', id]);
   }
 
   onPageChange(event: any) {
     this.pageSize = event.pageSize;
-    console.log('index: ', event.pageIndex);
-
     this.onSelectPage.emit({
       pageIndex: event.pageIndex,
       pageSize: this.pageSize,

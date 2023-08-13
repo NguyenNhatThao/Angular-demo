@@ -1,3 +1,27 @@
-<p>
-  student-detail works!
-</p>
+<form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" formControlName="name" />
+  </div>
+
+  <div>
+    <label for="age">Age</label>
+    <input type="number" id="age" formControlName="age" />
+  </div>
+
+  <div>
+    <label for="score">Score</label>
+    <input type="number" id="score" formControlName="score" />
+  </div>
+
+  <div>
+    <label for="theClass">Class</label>
+    <select id="theClass" formControlName="selectedClass">
+      <option *ngFor="let theClass of allClass" [value]="theClass.id">
+        {{ theClass.subject }}
+      </option>
+    </select>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>

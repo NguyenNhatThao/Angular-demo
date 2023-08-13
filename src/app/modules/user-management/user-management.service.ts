@@ -8,12 +8,20 @@ export class UserManagementService {
 
   constructor(private http: HttpClient) {}
 
-  getStudent() {
+  getAllStudent() {
     return this.http.get<any[]>(`${this.baseUrl}/student`);
   }
 
-  getClass() {
+  getStudent(studentId: number) {
+    return this.http.get<any>(`${this.baseUrl}/student/${studentId}`)
+  }
+
+  getAllClass() {
     return this.http.get<any[]>(`${this.baseUrl}/class`);
+  }
+
+  getClass(classId: number) {
+    return this.http.get<any[]>(`${this.baseUrl}/class/${classId}`);
   }
 
   getPagedData(
