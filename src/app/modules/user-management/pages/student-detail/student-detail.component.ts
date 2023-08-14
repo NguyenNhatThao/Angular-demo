@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../user-management.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -19,14 +19,10 @@ export class StudentDetail implements OnInit {
       Validators.pattern('^[a-zA-Z ]+$'),
     ]),
     age: new FormControl(0, [
-      Validators.required,
-      Validators.min(6),
-      Validators.max(100),
+      this.validateAge,
     ]),
     score: new FormControl(0, [
-      Validators.required,
-      Validators.min(0),
-      Validators.max(10),
+      this.validateScore,
     ]),
     selectedClass: new FormControl(0, [Validators.required]),
   });
@@ -72,6 +68,42 @@ export class StudentDetail implements OnInit {
       .updateStudent(this.studentInfo.id, this.studentForm.value)
       .subscribe((student) => {
         this.studentInfo = student;
+        this.submited = false;
       });
+  }
+
+  validateAge(control: any) {
+    const age = control.value;
+
+    if (!age || age === '') {
+      return {'required': true};
+    }
+
+    if (parseInt(age) < 6 || parseInt(age) > 100) {
+      return {'ageRange': true};
+    }
+
+    if (!/^\d+$/.test(age)) {
+      return { 'pattern': true };
+    }
+
+    return null;
+  }
+
+  validateScore(control: any) {
+    const score = control.value;
+    if (!score || score === '') {
+      return {'required': true};
+    }
+
+    if (parseInt(score) < 0 || parseInt(score) > 10) {
+      return {'scoreRange': true};
+    }
+
+    if (!/^[0-9.]+$/.test(score)) {
+      return { 'pattern': true };
+    }
+
+    return null;
   }
 }
