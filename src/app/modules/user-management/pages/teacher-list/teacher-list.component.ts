@@ -32,7 +32,7 @@ export class TeacherList implements OnInit {
 
   onPageChange(event: any) {
     this.UserManagementService.getPagedData(
-      'class',
+      'classes',
       event.pageIndex,
       event.pageSize
     ).subscribe((res) => {

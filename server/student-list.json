@@ -1,62 +1,59 @@
 {
-  "student": [
+  "students": [
     {
-      "id": 1,
       "name": "John Doe",
       "age": 25,
       "score": 1,
-      "class": 3
+      "selectedClass": "1",
+      "id": 1
     },
     {
       "id": 2,
       "name": "Jane Smith",
       "age": 30,
       "score": 8,
-      "class": 2
+      "selectedClass": 2
     },
     {
       "id": 3,
       "name": "Thomas Edison",
       "age": 27,
       "score": -2,
-      "class": 3
+      "selectedClass": 3
     },
     {
       "id": 4,
       "name": "Chi Pheo",
       "age": 26,
       "score": 4,
-      "class": 1
+      "selectedClass": 1
     },
     {
       "id": 5,
       "name": "Thi No",
       "age": 24,
       "score": 5,
-      "class": 2
+      "selectedClass": 2
     }
   ],
-  "class": [
+  "classes": [
     {
       "id": 1,
-      "subject": "Math",
-      "students": [1,4]
+      "subject": "Math"
     },
     {
       "id": 2,
-      "subject": "English",
-      "students": [2,5]
+      "subject": "English"
     },
     {
       "id": 3,
-      "subject": "History",
-      "students": [3]
+      "subject": "History"
     }
   ],
-  "teacher": [
+  "teachers": [
     {
       "id": 1,
-      "classes": [1,2],
+      "classes": [1, 2],
       "name": "Kelvin"
     },
     {

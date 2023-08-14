@@ -19,6 +19,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { LastClickDirective } from './directives/last-click-directive';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const materialLib = [
   MatPaginatorModule,
@@ -46,13 +48,15 @@ const materialLib = [
     UserListComponent,
     LastClickDirective,
   ],
-  imports: [...materialLib],
+  imports: [...materialLib, CommonModule, ReactiveFormsModule],
   exports: [
     ...materialLib,
     ScoreStatusPipe,
     FocusDirective,
     UserListComponent,
     LastClickDirective,
+    CommonModule,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

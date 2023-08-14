@@ -32,7 +32,7 @@ export class StudentList implements OnInit {
 
   onPageChange(event: any) {
     this.userManagementService
-      .getPagedData('student', event.pageIndex, event.pageSize)
+      .getPagedData('students', event.pageIndex, event.pageSize)
       .subscribe((res) => {
         this.dataSource.data = res;
         this.updateClassNumber();

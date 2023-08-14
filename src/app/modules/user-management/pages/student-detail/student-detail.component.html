@@ -1,27 +1,44 @@
-<form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Name</label>
-    <input type="text" id="name" formControlName="name" />
-  </div>
+<div>
+  <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+    <div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="15" for="name">Name</label>
+        <input fxFlex="20" class="form-control" type="text" id="name" formControlName="name" />
+        <div *ngIf="studentForm.get('name')?.touched || studentForm.get('name')?.dirty" fxLayout="row">
+          <div *ngIf="studentForm.get('name')?.hasError('required')">Name is required</div>
+          <div *ngIf="studentForm.get('name')?.hasError('pattern')">Name contains special
+            character</div>
+        </div>
+      </div>
 
-  <div>
-    <label for="age">Age</label>
-    <input type="number" id="age" formControlName="age" />
-  </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="15" for="age">Age</label>
+        <input fxFlex="20" type="number" min="6" max="100" id="age" formControlName="age" />
+        <div *ngIf="studentForm.get('age')?.touched || studentForm.get('age')?.dirty" fxLayout="row">
+          <div *ngIf="studentForm.get('age')?.hasError('required')">Age is required</div>
+        </div>
+      </div>
 
-  <div>
-    <label for="score">Score</label>
-    <input type="number" id="score" formControlName="score" />
-  </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="15" for="score">Score</label>
+        <input fxFlex="20" type="number" min="0" max="10" id="score" formControlName="score" />
+        <div *ngIf="studentForm.get('score')?.touched || studentForm.get('score')?.dirty" fxLayout="row">
+          <div *ngIf="studentForm.get('score')?.hasError('required')">Score is required</div>
+        </div>
+      </div>
 
-  <div>
-    <label for="theClass">Class</label>
-    <select id="theClass" formControlName="selectedClass">
-      <option *ngFor="let theClass of allClass" [value]="theClass.id">
-        {{ theClass.subject }}
-      </option>
-    </select>
-  </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="15" for="theClass">Class</label>
+        <select fxFlex="20" id="theClass" formControlName="selectedClass">
+          <option *ngFor="let theClass of allClass" [value]="theClass.id">
+            {{ theClass.subject }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-  <button type="submit">Submit</button>
-</form>
+    <div fxLayout="row">
+      <button type="submit" [disabled]="!studentForm.valid">Submit</button>
+    </div>
+  </form>
+</div>

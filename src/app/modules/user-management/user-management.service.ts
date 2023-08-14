@@ -9,19 +9,19 @@ export class UserManagementService {
   constructor(private http: HttpClient) {}
 
   getAllStudent() {
-    return this.http.get<any[]>(`${this.baseUrl}/student`);
+    return this.http.get<any[]>(`${this.baseUrl}/students`);
   }
 
   getStudent(studentId: number) {
-    return this.http.get<any>(`${this.baseUrl}/student/${studentId}`)
+    return this.http.get<any>(`${this.baseUrl}/students/${studentId}`);
   }
 
   getAllClass() {
-    return this.http.get<any[]>(`${this.baseUrl}/class`);
+    return this.http.get<any[]>(`${this.baseUrl}/classes`);
   }
 
   getClass(classId: number) {
-    return this.http.get<any[]>(`${this.baseUrl}/class/${classId}`);
+    return this.http.get<any[]>(`${this.baseUrl}/classes/${classId}`);
   }
 
   getPagedData(
@@ -33,5 +33,9 @@ export class UserManagementService {
     return this.http.get<any[]>(
       `${this.baseUrl}/${type}?_start=${startIndex}&_limit=${pageSize}`
     );
+  }
+
+  updateStudent(studentId: number, studentInfo: any) {
+    return this.http.put(`${this.baseUrl}/students/${studentId}`, studentInfo);
   }
 }
