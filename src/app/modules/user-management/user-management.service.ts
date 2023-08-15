@@ -38,4 +38,18 @@ export class UserManagementService {
   updateStudent(studentId: number, studentInfo: any) {
     return this.http.put(`${this.baseUrl}/students/${studentId}`, studentInfo);
   }
+
+  getStudentsOfClass(classId: number) {
+    return this.http.get<any[]>(
+      `${this.baseUrl}/students?selectedClass=${classId}`
+    );
+  }
+
+  getAllTeacher() {
+    return this.http.get<any[]>(`${this.baseUrl}/teachers`);
+  }
+
+  getClassOfTeacher(classId: number) {
+    return this.http.get<any>(`${this.baseUrl}/classes/${classId}`);
+  }
 }

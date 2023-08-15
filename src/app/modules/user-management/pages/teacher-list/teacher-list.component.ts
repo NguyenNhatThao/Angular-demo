@@ -10,9 +10,9 @@ import { forkJoin } from 'rxjs';
 })
 export class TeacherList implements OnInit {
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'subject', 'list'];
+  displayedColumns: string[] = ['id', 'name', 'displayNameOfClasses'];
   totalRecords = 0;
-  pageSize = 1;
+  pageSize = 2;
   listStudent: any;
 
   constructor(private UserManagementService: UserManagementService) {}
@@ -32,23 +32,42 @@ export class TeacherList implements OnInit {
 
   onPageChange(event: any) {
     this.UserManagementService.getPagedData(
-      'classes',
+      'teachers',
       event.pageIndex,
       event.pageSize
     ).subscribe((res) => {
-      this.dataSource.data = res;
-      this.getStudentsOfClass();
+      if (res) {
+        this.dataSource.data = res;
+        this.getClassesOfTeacher();
+      }
     });
   }
 
-  getStudentsOfClass() {
-    this.dataSource.data.forEach((theClass: any) => {
-      theClass.list = [];
-      this.listStudent.forEach((theStudent: any) => {
-        if (theClass.students.indexOf(theStudent.id) > -1) {
-          theClass.list.push(theStudent.name);
-        }
+  getClassesOfTeacher() {
+    this.dataSource.data.forEach((theTeacher: any) => {
+      theTeacher.isExpanded = false;
+      theTeacher.listStudent = [];
+      theTeacher.displayNameOfClasses = '';
+      theTeacher.classes.forEach((classId: any) => {
+        this.UserManagementService.getClassOfTeacher(classId).subscribe(
+          (theClass: any) => {
+            if (theClass) {
+              theTeacher.displayNameOfClasses += theClass.subject + ' ';
+              this.UserManagementService.getStudentsOfClass(
+                theClass.id
+              ).subscribe((listStudent: any[]) => {
+                if (listStudent) {
+                  listStudent.forEach((student: any) => {
+                    theTeacher.listStudent.push(student.name);
+                  });
+                }
+              });
+            }
+          }
+        );
       });
     });
   }
+
+  getStudentsOfTeacher() {}
 }

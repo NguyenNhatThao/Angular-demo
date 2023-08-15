@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ScoreStatusPipe } from './pipes/score.pipe';
 import { FocusDirective } from './directives/focus-directive';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,6 +21,7 @@ import { LastClickDirective } from './directives/last-click-directive';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
 
 const materialLib = [
   MatPaginatorModule,
@@ -39,6 +40,7 @@ const materialLib = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatButtonModule,
+  MatListModule,
 ];
 
 @NgModule({
@@ -58,5 +60,6 @@ const materialLib = [
     CommonModule,
     ReactiveFormsModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

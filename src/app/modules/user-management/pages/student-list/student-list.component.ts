@@ -12,7 +12,7 @@ export class StudentList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
   totalRecords = 0;
-  pageSize = 1;
+  pageSize = 2;
   listClass: any;
 
   constructor(private userManagementService: UserManagementService) {}
@@ -41,13 +41,13 @@ export class StudentList implements OnInit {
 
   updateClassNumber() {
     this.dataSource.data.forEach((theStudent: any) => {
-      let numberClassOfStudent = 0;
-      this.listClass.forEach((theClass: any) => {
-        if (theClass.students.indexOf(theStudent.id) > -1) {
-          numberClassOfStudent++;
-        }
-      });
-      theStudent.class = numberClassOfStudent;
+      this.userManagementService
+        .getClass(theStudent.selectedClass)
+        .subscribe((theClass: any) => {
+          if (theClass) {
+            theStudent.class = theClass.subject;
+          }
+        });
     });
   }
 }

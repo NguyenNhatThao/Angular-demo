@@ -4,7 +4,7 @@
       "name": "John Doe",
       "age": 25,
       "score": 1,
-      "selectedClass": "1",
+      "selectedClass": "3",
       "id": 1
     },
     {
@@ -53,12 +53,17 @@
   "teachers": [
     {
       "id": 1,
-      "classes": [1, 2],
+      "classes": [
+        3
+      ],
       "name": "Kelvin"
     },
     {
       "id": 2,
-      "classes": [3],
+      "classes": [
+        1,
+        2
+      ],
       "name": "Miami"
     }
   ]
