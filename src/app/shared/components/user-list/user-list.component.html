@@ -1,7 +1,14 @@
 <div fxLayout="row" fxLayoutAlign="space-around center">
-  <mat-table matSort style="width: 100%" [dataSource]="dataSource" multiTemplateDataRows>
-    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-      <ng-container *ngIf="column === 'edit' && role === 'student'" else otherColumn>
+  <mat-table matSort [dataSource]="dataSource">
+    <ng-container
+      *ngFor="let column of displayedColumns; let i = index"
+      [matColumnDef]="column"
+    >
+      <ng-container
+        *ngIf="column === 'edit' && role === 'student'"
+        else
+        otherColumn
+      >
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let data">
           <mat-icon (click)="getUserDetail(data.id)">edit</mat-icon>
@@ -9,11 +16,13 @@
       </ng-container>
 
       <ng-container #otherColumn>
-        <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>{{
+          headerColumns[i]
+        }}</mat-header-cell>
         <ng-container *ngIf="column === 'score'" else notScoreColumn>
           <mat-cell *matCellDef="let data">{{
             data[column] | scoreStatusPipe
-            }}</mat-cell>
+          }}</mat-cell>
         </ng-container>
         <ng-container #notScoreColumn>
           <mat-cell *matCellDef="let data">{{ data[column] }}</mat-cell>
@@ -21,28 +30,18 @@
       </ng-container>
     </ng-container>
 
-    <ng-container matColumnDef="expandedDetail" *ngIf="role === 'teacher'">
-      <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-        <mat-list>
-          <ng-container *ngIf="element.isExpanded">
-            <mat-subheader>Students of {{element.name}}</mat-subheader>
-            <mat-list-item *ngFor="let studentName of element.listStudent">
-              <mat-line>{{studentName}}</mat-line>
-            </mat-list-item>
-          </ng-container>
-        </mat-list>
-
-      </mat-cell>
-    </ng-container>
-
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="selectRow(row)"> </mat-row>
-    <div *ngIf="role === 'teacher'">
-      <mat-row *matRowDef="let row; columns: ['expandedDetail']"
-        [@detailExpand]="row.isExpanded ? 'expanded' : 'collapsed'"></mat-row>
-    </div>
+    <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
   </mat-table>
 </div>
-<mat-paginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
-  [pageSizeOptions]="pageSizeOptions" aria-label="Select page" showFirstLastButtons>
-</mat-paginator>
+<div *ngIf="hasPaging">
+  <mat-paginator
+    [length]="totalRecords"
+    [pageSize]="pageSize"
+    (page)="onPageChange($event)"
+    [pageSizeOptions]="pageSizeOptions"
+    aria-label="Select page"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

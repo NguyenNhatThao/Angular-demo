@@ -1,2 +1,10 @@
-<app-user-list [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
-  (onSelectPage)="onPageChange($event)" [role]="'teacher'"></app-user-list>
+<app-table-contain-table
+  [displayedColumns]="displayedColumns"
+  [dataSource]="dataSource"
+  [totalRecords]="totalRecords"
+  (onSelectPage)="onPageChange($event)"
+  [role]="'teacher'"
+  [headerColumns]="headerColumns"
+  [displayedChildColumns]="displayedChildColumns"
+  [headerChildColumns]="headerChildColumns"
+></app-table-contain-table>

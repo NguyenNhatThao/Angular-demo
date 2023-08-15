@@ -11,6 +11,9 @@ import { forkJoin } from 'rxjs';
 export class TeacherList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'displayNameOfClasses'];
+  headerColumns: string[] = ['', 'Name', 'Classes'];
+  displayedChildColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
+  headerChildColumns: string[] = ['', 'Name', 'Age', 'Score', 'Class'];
   totalRecords = 0;
   pageSize = 2;
   listStudent: any;
@@ -52,13 +55,17 @@ export class TeacherList implements OnInit {
         this.UserManagementService.getClassOfTeacher(classId).subscribe(
           (theClass: any) => {
             if (theClass) {
-              theTeacher.displayNameOfClasses += theClass.subject + ' ';
+              if (theTeacher.displayNameOfClasses) {
+                theTeacher.displayNameOfClasses = theTeacher.displayNameOfClasses.concat(', ', theClass.subject);
+              } else {
+                theTeacher.displayNameOfClasses = theClass.subject;
+              }
               this.UserManagementService.getStudentsOfClass(
                 theClass.id
               ).subscribe((listStudent: any[]) => {
                 if (listStudent) {
                   listStudent.forEach((student: any) => {
-                    theTeacher.listStudent.push(student.name);
+                    theTeacher.listStudent.push(student);
                   });
                 }
               });
@@ -68,6 +75,4 @@ export class TeacherList implements OnInit {
       });
     });
   }
-
-  getStudentsOfTeacher() {}
 }

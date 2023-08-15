@@ -11,6 +11,7 @@ import { UserManagementService } from '../../user-management.service';
 export class StudentList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
+  headerColumns: string[] = ['', 'Name', 'Age', 'Score', 'Class'];
   totalRecords = 0;
   pageSize = 2;
   listClass: any;

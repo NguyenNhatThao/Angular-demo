@@ -1,10 +1,3 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,22 +5,14 @@ import { Router } from '@angular/router';
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-    ]),
-  ],
 })
 export class UserListComponent implements OnInit {
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: any;
   @Input() totalRecords = 0;
   @Input() role = '';
+  @Input() headerColumns: any;
+  @Input() hasPaging = true;
   @Output() onSelectPage = new EventEmitter<any>();
 
   pageSize = 2;
@@ -48,9 +33,5 @@ export class UserListComponent implements OnInit {
       pageSize: this.pageSize,
       previousPageIndex: event.previousPageIndex,
     });
-  }
-
-  selectRow(row: any) {
-    row.isExpanded = !row.isExpanded;
   }
 }

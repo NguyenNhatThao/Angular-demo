@@ -2,9 +2,9 @@
   "students": [
     {
       "name": "John Doe",
-      "age": 25,
+      "age": "25",
       "score": 1,
-      "selectedClass": "3",
+      "selectedClass": "1",
       "id": 1
     },
     {
