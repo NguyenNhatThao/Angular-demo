@@ -1,14 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-around center">
   <mat-table matSort [dataSource]="dataSource">
-    <ng-container
-      *ngFor="let column of displayedColumns; let i = index"
-      [matColumnDef]="column"
-    >
-      <ng-container
-        *ngIf="column === 'edit' && role === 'student'"
-        else
-        otherColumn
-      >
+    <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
+      <ng-container *ngIf="column === 'edit' && role === 'student'" else otherColumn>
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let data">
           <mat-icon (click)="getUserDetail(data.id)">edit</mat-icon>
@@ -18,11 +11,11 @@
       <ng-container #otherColumn>
         <mat-header-cell *matHeaderCellDef>{{
           headerColumns[i]
-        }}</mat-header-cell>
+          }}</mat-header-cell>
         <ng-container *ngIf="column === 'score'" else notScoreColumn>
           <mat-cell *matCellDef="let data">{{
             data[column] | scoreStatusPipe
-          }}</mat-cell>
+            }}</mat-cell>
         </ng-container>
         <ng-container #notScoreColumn>
           <mat-cell *matCellDef="let data">{{ data[column] }}</mat-cell>
@@ -35,13 +28,7 @@
   </mat-table>
 </div>
 <div *ngIf="hasPaging">
-  <mat-paginator
-    [length]="totalRecords"
-    [pageSize]="pageSize"
-    (page)="onPageChange($event)"
-    [pageSizeOptions]="pageSizeOptions"
-    aria-label="Select page"
-    showFirstLastButtons
-  >
+  <mat-paginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
+    [pageSizeOptions]="pageSizeOptions" aria-label="Select page" showFirstLastButtons>
   </mat-paginator>
 </div>

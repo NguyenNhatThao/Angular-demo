@@ -12,18 +12,18 @@ export class TeacherList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'displayNameOfClasses'];
   headerColumns: string[] = ['', 'Name', 'Classes'];
-  displayedChildColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
-  headerChildColumns: string[] = ['', 'Name', 'Age', 'Score', 'Class'];
+  displayedChildColumns: string[] = ['name', 'age', 'score', 'class'];
+  headerChildColumns: string[] = ['Name', 'Age', 'Score', 'Class'];
   totalRecords = 0;
   pageSize = 2;
   listStudent: any;
 
-  constructor(private UserManagementService: UserManagementService) {}
+  constructor(private userManagementService: UserManagementService) {}
 
   ngOnInit() {
     forkJoin([
-      this.UserManagementService.getAllStudent(),
-      this.UserManagementService.getAllClass(),
+      this.userManagementService.getAllStudent(),
+      this.userManagementService.getAllClass(),
     ]).subscribe((res: any) => {
       if (res) {
         this.listStudent = res[0];
@@ -34,16 +34,14 @@ export class TeacherList implements OnInit {
   }
 
   onPageChange(event: any) {
-    this.UserManagementService.getPagedData(
-      'teachers',
-      event.pageIndex,
-      event.pageSize
-    ).subscribe((res) => {
-      if (res) {
-        this.dataSource.data = res;
-        this.getClassesOfTeacher();
-      }
-    });
+    this.userManagementService
+      .getPagedData('teachers', event.pageIndex, event.pageSize)
+      .subscribe((res) => {
+        if (res) {
+          this.dataSource.data = res;
+          this.getClassesOfTeacher();
+        }
+      });
   }
 
   getClassesOfTeacher() {
@@ -52,27 +50,42 @@ export class TeacherList implements OnInit {
       theTeacher.listStudent = [];
       theTeacher.displayNameOfClasses = '';
       theTeacher.classes.forEach((classId: any) => {
-        this.UserManagementService.getClassOfTeacher(classId).subscribe(
-          (theClass: any) => {
+        this.userManagementService
+          .getClassOfTeacher(classId)
+          .subscribe((theClass: any) => {
             if (theClass) {
               if (theTeacher.displayNameOfClasses) {
-                theTeacher.displayNameOfClasses = theTeacher.displayNameOfClasses.concat(', ', theClass.subject);
+                theTeacher.displayNameOfClasses =
+                  theTeacher.displayNameOfClasses.concat(
+                    ', ',
+                    theClass.subject
+                  );
               } else {
                 theTeacher.displayNameOfClasses = theClass.subject;
               }
-              this.UserManagementService.getStudentsOfClass(
-                theClass.id
-              ).subscribe((listStudent: any[]) => {
-                if (listStudent) {
-                  listStudent.forEach((student: any) => {
-                    theTeacher.listStudent.push(student);
-                  });
-                }
-              });
+              this.getStudentsOfTeacher(theClass, theTeacher);
             }
-          }
-        );
+          });
       });
     });
+  }
+
+  getStudentsOfTeacher(theClass: any, theTeacher: any) {
+    this.userManagementService
+      .getStudentsOfClass(theClass.id)
+      .subscribe((listStudent: any[]) => {
+        if (listStudent) {
+          listStudent.forEach((student: any) => {
+            theTeacher.listStudent.push(student);
+            this.userManagementService
+              .getClass(student.selectedClass)
+              .subscribe((theClass: any) => {
+                if (theClass) {
+                  student.class = theClass.subject;
+                }
+              });
+          });
+        }
+      });
   }
 }

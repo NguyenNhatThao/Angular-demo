@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { UserListComponent } from './components/user-list/user-list.component';
+import { CommonTableComponent } from './components/common-table/common-table.component';
 import { LastClickDirective } from './directives/last-click-directive';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -48,7 +48,7 @@ const materialLib = [
   declarations: [
     ScoreStatusPipe,
     FocusDirective,
-    UserListComponent,
+    CommonTableComponent,
     LastClickDirective,
     TableContainTableComponent,
   ],
@@ -57,11 +57,11 @@ const materialLib = [
     ...materialLib,
     ScoreStatusPipe,
     FocusDirective,
-    UserListComponent,
+    CommonTableComponent,
     LastClickDirective,
     CommonModule,
     ReactiveFormsModule,
-    TableContainTableComponent
+    TableContainTableComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

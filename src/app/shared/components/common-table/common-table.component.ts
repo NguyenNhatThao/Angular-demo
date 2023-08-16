@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss'],
+  templateUrl: './common-table.component.html',
+  styleUrls: ['./common-table.component.scss'],
 })
-export class UserListComponent implements OnInit {
+export class CommonTableComponent implements OnInit {
   @Input() displayedColumns: string[] = [];
   @Input() dataSource: any;
   @Input() totalRecords = 0;

@@ -36,11 +36,11 @@ export class StudentList implements OnInit {
       .getPagedData('students', event.pageIndex, event.pageSize)
       .subscribe((res) => {
         this.dataSource.data = res;
-        this.updateClassNumber();
+        this.updateClassName();
       });
   }
 
-  updateClassNumber() {
+  updateClassName() {
     this.dataSource.data.forEach((theStudent: any) => {
       this.userManagementService
         .getClass(theStudent.selectedClass)

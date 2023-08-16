@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserManagementService } from '../../user-management.service';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -43,9 +39,9 @@ export class StudentDetail implements OnInit {
         this.getInitForm();
       }
     });
-    this.studentForm.valueChanges.subscribe((newValue: any)=> {
+    this.studentForm.valueChanges.subscribe((newValue: any) => {
       this.submited = false;
-    })
+    });
   }
 
   getStudentIdFromUrl(): number {
