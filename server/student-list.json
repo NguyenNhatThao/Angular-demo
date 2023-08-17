@@ -39,31 +39,32 @@
   "classes": [
     {
       "id": 1,
-      "subject": "Math"
+      "subject": "Math",
+      "students": [1, 4],
+      "teacher": 2
     },
     {
       "id": 2,
-      "subject": "English"
+      "subject": "English",
+      "students": [2, 5],
+      "teacher": 2
     },
     {
       "id": 3,
-      "subject": "History"
+      "subject": "History",
+      "students": [3],
+      "teacher": 1
     }
   ],
   "teachers": [
     {
       "id": 1,
-      "classes": [
-        3
-      ],
+      "classes": [3],
       "name": "Kelvin"
     },
     {
       "id": 2,
-      "classes": [
-        1,
-        2
-      ],
+      "classes": [1, 2],
       "name": "Miami"
     }
   ]

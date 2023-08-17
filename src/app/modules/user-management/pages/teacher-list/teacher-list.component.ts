@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserManagementService } from '../../user-management.service';
 import { forkJoin } from 'rxjs';
+import { ScoreStatusPipe } from 'src/app/shared/pipes/score.pipe';
 
 @Component({
   selector: 'app-teacher-list',
@@ -10,13 +11,14 @@ import { forkJoin } from 'rxjs';
 })
 export class TeacherList implements OnInit {
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'name', 'displayNameOfClasses'];
+  displayedColumns: string[] = ['id', 'name', 'displayNameOfClasses', 'edit'];
   headerColumns: string[] = ['', 'Name', 'Classes'];
   displayedChildColumns: string[] = ['name', 'age', 'score', 'class'];
   headerChildColumns: string[] = ['Name', 'Age', 'Score', 'Class'];
   totalRecords = 0;
   pageSize = 2;
   listStudent: any;
+  scoreStattusPipe = new ScoreStatusPipe();
 
   constructor(private userManagementService: UserManagementService) {}
 
@@ -85,6 +87,15 @@ export class TeacherList implements OnInit {
                 }
               });
           });
+
+          if (theTeacher.listStudent[0]?.score) {
+            theTeacher.listStudent = theTeacher.listStudent.map(
+              (data: any) => ({
+                ...data,
+                score: this.scoreStattusPipe.transform(data.score),
+              })
+            );
+          }
         }
       });
   }

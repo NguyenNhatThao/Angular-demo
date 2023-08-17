@@ -1,8 +1,2 @@
-<app-user-list
-  [displayedColumns]="displayedColumns"
-  [dataSource]="dataSource"
-  [totalRecords]="totalRecords"
-  (onSelectPage)="onPageChange($event)"
-  [role]="'student'"
-  [headerColumns]="headerColumns"
-></app-user-list>
+<app-table-contain-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
+  (onSelectPage)="onPageChange($event)" [headerColumns]="headerColumns"></app-table-contain-table>

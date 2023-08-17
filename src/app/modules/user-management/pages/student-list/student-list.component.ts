@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin } from 'rxjs';
 import { UserManagementService } from '../../user-management.service';
+import { ScoreStatusPipe } from 'src/app/shared/pipes/score.pipe';
 
 @Component({
   selector: 'app-student-list',
@@ -15,6 +16,7 @@ export class StudentList implements OnInit {
   totalRecords = 0;
   pageSize = 2;
   listClass: any;
+  scoreStattusPipe = new ScoreStatusPipe();
 
   constructor(private userManagementService: UserManagementService) {}
 
@@ -36,6 +38,12 @@ export class StudentList implements OnInit {
       .getPagedData('students', event.pageIndex, event.pageSize)
       .subscribe((res) => {
         this.dataSource.data = res;
+        if (this.dataSource.data[0]?.score) {
+          this.dataSource.data = this.dataSource.data.map((data) => ({
+            ...data,
+            score: this.scoreStattusPipe.transform(data.score),
+          }));
+        }
         this.updateClassName();
       });
   }

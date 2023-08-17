@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserManagementService } from '../../user-management.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
@@ -12,7 +12,6 @@ import { forkJoin } from 'rxjs';
 export class StudentDetail implements OnInit {
   private studentInfo: any;
   public allClass: any[] = [];
-  public submited = false;
   public studentForm: FormGroup = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -24,7 +23,8 @@ export class StudentDetail implements OnInit {
   });
   constructor(
     private route: ActivatedRoute,
-    private userManagementService: UserManagementService
+    private userManagementService: UserManagementService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -39,9 +39,7 @@ export class StudentDetail implements OnInit {
         this.getInitForm();
       }
     });
-    this.studentForm.valueChanges.subscribe((newValue: any) => {
-      this.submited = false;
-    });
+    this.studentForm.valueChanges.subscribe((newValue: any) => {});
   }
 
   getStudentIdFromUrl(): number {
@@ -66,7 +64,7 @@ export class StudentDetail implements OnInit {
       .updateStudent(this.studentInfo.id, this.studentForm.value)
       .subscribe((student) => {
         this.studentInfo = student;
-        this.submited = true;
+        this.router.navigate(['/user-management/student']);
       });
   }
 
