@@ -10,7 +10,7 @@
 
       <ng-container #otherColumn>
         <mat-header-cell *matHeaderCellDef>{{
-          headerColumns[i]
+          capitalize(displayedColumns[i])
           }}</mat-header-cell>
         <ng-container>
           <mat-cell *matCellDef="let data">{{ data[column] }}</mat-cell>

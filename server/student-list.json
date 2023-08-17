@@ -40,31 +40,31 @@
     {
       "id": 1,
       "subject": "Math",
-      "students": [1, 4],
+      "listStudent": [1, 4],
       "teacher": 2
     },
     {
       "id": 2,
       "subject": "English",
-      "students": [2, 5],
+      "listStudent": [2, 5],
       "teacher": 2
     },
     {
       "id": 3,
       "subject": "History",
-      "students": [3],
+      "listStudent": [3],
       "teacher": 1
     }
   ],
   "teachers": [
     {
       "id": 1,
-      "classes": [3],
+      "listClass": [3],
       "name": "Kelvin"
     },
     {
       "id": 2,
-      "classes": [1, 2],
+      "listClass": [1, 2],
       "name": "Miami"
     }
   ]

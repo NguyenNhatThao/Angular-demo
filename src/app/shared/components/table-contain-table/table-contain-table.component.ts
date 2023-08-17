@@ -56,4 +56,8 @@ export class TableContainTableComponent implements OnInit {
     row.isExpanded = !row.isExpanded;
     console.log(row.isExpanded);
   }
+
+  capitalize(name: string) {
+    return name[0].toUpperCase() + name.slice(1);
+  }
 }
