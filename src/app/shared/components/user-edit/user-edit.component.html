@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="40px">
+    <div fxLayout="column" fxLayoutGap="15px">
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="10" for="name">Name</label>
+        <div fxFlex="80" fxLayout="column" fxLayoutGap="5px">
+          <input type="text" id="name" formControlName="name" />
+          <div *ngIf="
+              studentForm.get('name')?.touched || studentForm.get('name')?.dirty
+            " fxLayout="row">
+            <div *ngIf="studentForm.get('name')?.hasError('required')" class="text-danger">
+              Name is required
+            </div>
+            <div *ngIf="studentForm.get('name')?.hasError('pattern')" class="text-danger">
+              Name contains special character
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="10" for="age">Age</label>
+        <div fxFlex="80" fxLayout="column" fxLayoutGap="5px">
+          <input type="text" id="age" formControlName="age" />
+          <div *ngIf="
+              studentForm.get('age')?.touched || studentForm.get('age')?.dirty
+            " fxLayout="row">
+            <div *ngIf="studentForm.get('age')?.hasError('required')" class="text-danger">
+              Age is required
+            </div>
+            <div *ngIf="studentForm.get('age')?.hasError('pattern')" class="text-danger">
+              Age is decimal number
+            </div>
+            <div *ngIf="studentForm.get('age')?.hasError('ageRange')" class="text-danger">
+              Age is between 6 to 100 years old
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="10" for="score">Score</label>
+        <div fxFlex="80" fxLayout="column" fxLayoutGap="5px">
+          <input type="text" id="score" formControlName="score" />
+          <div *ngIf="
+              studentForm.get('score')?.touched ||
+              studentForm.get('score')?.dirty
+            " fxLayout="row">
+            <div *ngIf="studentForm.get('score')?.hasError('required')" class="text-danger">
+              Score is required
+            </div>
+            <div *ngIf="studentForm.get('score')?.hasError('scoreRange')" class="text-danger">
+              Score is between 0 to 10
+            </div>
+            <div *ngIf="studentForm.get('score')?.hasError('pattern')" class="text-danger">
+              Score is a number
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label fxFlex="10" for="theClass">Class</label>
+        <select fxFlex="80" id="theClass" formControlName="selectedClass">
+          <option *ngFor="let theClass of allClass" [value]="theClass.id">
+            {{ theClass.subject }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="end end">
+      <button class="btn btn-primary" style="margin-right: 50px" type="submit"
+        [disabled]="!studentForm.valid || !studentForm.dirty">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

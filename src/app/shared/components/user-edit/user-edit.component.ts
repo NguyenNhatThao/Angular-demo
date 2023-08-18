@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserManagementService } from '../../user-management.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserManagementService } from 'src/app/modules/user-management/user-management.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'app-student-detail',
-  templateUrl: './student-detail.component.html',
-  styleUrls: ['./student-detail.component.scss'],
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
+  styleUrls: ['./user-edit.component.css'],
 })
-export class UserDetail implements OnInit {
+export class UserEditComponent implements OnInit {
   private studentInfo: any;
   public allClass: any[] = [];
   public studentForm: FormGroup = new FormGroup({

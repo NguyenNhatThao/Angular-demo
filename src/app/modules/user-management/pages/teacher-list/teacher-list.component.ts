@@ -20,12 +20,12 @@ export class TeacherList implements OnInit {
   constructor(private userManagementService: UserManagementService) {}
 
   ngOnInit() {
-    this.userManagementService.getAllTeacher().subscribe((res:any)=> {
-      if(res) {
+    this.userManagementService.getAllTeacher().subscribe((res: any) => {
+      if (res) {
         this.totalRecords = res.length;
         this.onPageChange({ pageIndex: 0, pageSize: this.pageSize });
       }
-    })
+    });
   }
 
   onPageChange(event: any) {
@@ -44,21 +44,30 @@ export class TeacherList implements OnInit {
       teacher.classes = '';
       teacher.listStudent = [];
       teacher.listClass.forEach((classId: number) => {
-        this.userManagementService.getClassOfTeacher(classId).subscribe((theClass: any) => {
-          if (theClass) {
-            teacher.classes = teacher.classes ? teacher.classes.concat(', ', theClass.subject) : theClass.subject;
-          }
-        });
-        this.getStudentsDetailOfTeacher(teacher, classId);
-      })
-    })
+        this.userManagementService
+          .getClassOfTeacher(classId)
+          .subscribe((theClass: any) => {
+            if (theClass) {
+              teacher.classes = teacher.classes
+                ? teacher.classes.concat(', ', theClass.subject)
+                : theClass.subject;
+              this.getStudentsDetailOfTeacher(teacher, theClass);
+            }
+          });
+      });
+    });
   }
 
-  getStudentsDetailOfTeacher(teacher: any, classId: number) {
-    this.userManagementService.getStudentsOfClass(classId).subscribe((students: any)=> {
-      if (students) {
-        teacher.listStudent = teacher.listStudent.concat(...students);
-      }
-    })
+  getStudentsDetailOfTeacher(teacher: any, theClass: any) {
+    this.userManagementService
+      .getStudentsOfClass(theClass.id)
+      .subscribe((students: any) => {
+        if (students) {
+          students = students.map((student: any) => {
+            return { ...student, class: theClass.subject };
+          });
+          teacher.listStudent = teacher.listStudent.concat(...students);
+        }
+      });
   }
 }

@@ -41,7 +41,7 @@ export class TableContainTableComponent implements OnInit {
   ngOnInit() {}
 
   getUserDetail(id: number) {
-    this.router.navigate(['/user-management/student-detail/', id]);
+    this.router.navigate(['/user-management/user-detail/', id]);
   }
 
   onPageChange(event: any) {
@@ -54,7 +54,6 @@ export class TableContainTableComponent implements OnInit {
 
   selectRow(row: any) {
     row.isExpanded = !row.isExpanded;
-    console.log(row.isExpanded);
   }
 
   capitalize(name: string) {

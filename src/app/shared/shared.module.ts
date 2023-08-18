@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { TableContainTableComponent } from './components/table-contain-table/table-contain-table.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 
 const materialLib = [
   MatPaginatorModule,
@@ -49,6 +50,7 @@ const materialLib = [
     FocusDirective,
     LastClickDirective,
     TableContainTableComponent,
+    UserEditComponent,
   ],
   imports: [...materialLib, CommonModule, ReactiveFormsModule],
   exports: [
