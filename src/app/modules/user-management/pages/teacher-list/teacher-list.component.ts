@@ -34,34 +34,31 @@ export class TeacherList implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.dataSource.data = res;
-          // this.getClassesOfTeacher();
-          this.getClassesTeacher();
+          this.getClassesOfTeacher();
         }
       });
   }
 
-  getClassesTeacher() {
+  getClassesOfTeacher() {
     this.dataSource.data.forEach((teacher: any) => {
       teacher.classes = '';
       teacher.listStudent = [];
       teacher.listClass.forEach((classId: number) => {
         this.userManagementService.getClassOfTeacher(classId).subscribe((theClass: any) => {
           if (theClass) {
-            if (teacher.classes) {
-              teacher.classes =
-                teacher.classes.concat(
-                  ', ',
-                  theClass.subject
-                );
-            } else {
-              teacher.classes = theClass.subject;
-            }
+            teacher.classes = teacher.classes ? teacher.classes.concat(', ', theClass.subject) : theClass.subject;
           }
         });
-        this.userManagementService.getStudentsOfClass(classId).subscribe((students: any)=> {
-          teacher.listStudent = teacher.listStudent.concat(...students);
-        })
+        this.getStudentsDetailOfTeacher(teacher, classId);
       })
+    })
+  }
+
+  getStudentsDetailOfTeacher(teacher: any, classId: number) {
+    this.userManagementService.getStudentsOfClass(classId).subscribe((students: any)=> {
+      if (students) {
+        teacher.listStudent = teacher.listStudent.concat(...students);
+      }
     })
   }
 }
