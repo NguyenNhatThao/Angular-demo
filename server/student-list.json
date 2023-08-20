@@ -1,18 +1,18 @@
 {
   "students": [
     {
-      "name": "John Dor",
-      "age": "25",
-      "score": 1,
+      "name": "Jane Smith",
+      "age": "30",
+      "score": 8,
       "selectedClass": "1",
       "id": 1
     },
     {
-      "id": 2,
-      "name": "Jane Smith",
-      "age": 30,
-      "score": 8,
-      "selectedClass": 2
+      "name": "John Marcan",
+      "age": "15",
+      "score": "2",
+      "selectedClass": "2",
+      "id": 2
     },
     {
       "id": 3,
@@ -40,31 +40,44 @@
     {
       "id": 1,
       "subject": "Math",
-      "listStudent": [1, 4],
+      "listStudent": [
+        1,
+        4
+      ],
       "teacher": 2
     },
     {
       "id": 2,
       "subject": "English",
-      "listStudent": [2, 5],
+      "listStudent": [
+        2,
+        5
+      ],
       "teacher": 2
     },
     {
       "id": 3,
       "subject": "History",
-      "listStudent": [3],
+      "listStudent": [
+        3
+      ],
       "teacher": 1
     }
   ],
   "teachers": [
     {
       "id": 1,
-      "listClass": [3],
+      "listClass": [
+        3
+      ],
       "name": "Kelvin"
     },
     {
       "id": 2,
-      "listClass": [1, 2],
+      "listClass": [
+        1,
+        2
+      ],
       "name": "Miami"
     }
   ]

@@ -1,105 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserManagementService } from 'src/app/modules/user-management/user-management.service';
-import { forkJoin } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.css'],
+  styleUrls: ['./user-edit.component.scss'],
 })
-export class UserEditComponent implements OnInit {
-  private studentInfo: any;
-  public allClass: any[] = [];
-  public studentForm: FormGroup = new FormGroup({
-    name: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[a-zA-Z ]+$'),
-    ]),
-    age: new FormControl(0, [this.validateAge]),
-    score: new FormControl(0, [this.validateScore]),
-    selectedClass: new FormControl(0, [Validators.required]),
-  });
-  constructor(
-    private route: ActivatedRoute,
-    private userManagementService: UserManagementService,
-    private router: Router
-  ) {}
+export class UserEditComponent {
+  @Input() userInfo: any;
+  @Input() userForm: any;
+  @Output() submit = new EventEmitter<any>();
 
-  ngOnInit() {
-    const studentId = this.getStudentIdFromUrl();
-    forkJoin([
-      this.userManagementService.getStudent(studentId),
-      this.userManagementService.getAllClass(),
-    ]).subscribe((res: any) => {
-      if (res) {
-        this.studentInfo = res[0];
-        this.allClass = res[1];
-        this.getInitForm();
-      }
-    });
-    this.studentForm.valueChanges.subscribe((newValue: any) => {});
-  }
-
-  getStudentIdFromUrl(): number {
-    let studentId = 0;
-    this.route.params.subscribe((params) => {
-      studentId = params['id'];
-    });
-    return studentId;
-  }
-
-  getInitForm() {
-    this.studentForm.get('name')?.setValue(this.studentInfo.name);
-    this.studentForm.get('age')?.setValue(this.studentInfo.age);
-    this.studentForm.get('score')?.setValue(this.studentInfo.score);
-    this.studentForm
-      .get('selectedClass')
-      ?.setValue(this.studentInfo.selectedClass);
-  }
+  constructor() {}
 
   onSubmit() {
-    this.userManagementService
-      .updateStudent(this.studentInfo.id, this.studentForm.value)
-      .subscribe((student) => {
-        this.studentInfo = student;
-        this.router.navigate(['/user-management/student']);
-      });
+    this.submit.emit(this.userForm);
   }
 
-  validateAge(control: any) {
-    const age = control.value;
-
-    if (!age || age === '') {
-      return { required: true };
+  getFieldValue(value: any): string | number {
+    if(typeof value === 'string' || typeof value === 'number') {
+      return value as string | number;
     }
-
-    if (parseInt(age) < 6 || parseInt(age) > 100) {
-      return { ageRange: true };
-    }
-
-    if (!/^\d+$/.test(age)) {
-      return { pattern: true };
-    }
-
-    return null;
+    return '';
   }
-
-  validateScore(control: any) {
-    const score = control.value;
-    if (!score || score === '') {
-      return { required: true };
-    }
-
-    if (parseInt(score) < 0 || parseInt(score) > 10) {
-      return { scoreRange: true };
-    }
-
-    if (!/^[0-9.]+$/.test(score)) {
-      return { pattern: true };
-    }
-
-    return null;
+  
+  isObject(value: any): boolean {
+    return typeof value === 'object' && value !== null;
+  }
+  
+  getValue(value: any) {
+    return value;
   }
 }

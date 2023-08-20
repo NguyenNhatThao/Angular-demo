@@ -52,4 +52,12 @@ export class UserManagementService {
   getClassOfTeacher(classId: number) {
     return this.http.get<any>(`${this.baseUrl}/classes/${classId}`);
   }
+
+  getTeacher(teacherId: number) {
+    return this.http.get<any>(`${this.baseUrl}/teachers/${teacherId}`);
+  }
+
+  updateTeacher(teacherId: number, teacherInfo: any) {
+    return this.http.put(`${this.baseUrl}/students/${teacherId}`, teacherInfo);
+  }
 }

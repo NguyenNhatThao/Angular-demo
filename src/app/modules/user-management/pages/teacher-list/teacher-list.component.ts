@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserManagementService } from '../../user-management.service';
 import { ScoreStatusPipe } from 'src/app/shared/pipes/score.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-list',
@@ -17,7 +18,7 @@ export class TeacherList implements OnInit {
   pageSize = 2;
   scoreStattusPipe = new ScoreStatusPipe();
 
-  constructor(private userManagementService: UserManagementService) {}
+  constructor(private userManagementService: UserManagementService, private router: Router) {}
 
   ngOnInit() {
     this.userManagementService.getAllTeacher().subscribe((res: any) => {
@@ -69,5 +70,9 @@ export class TeacherList implements OnInit {
           teacher.listStudent = teacher.listStudent.concat(...students);
         }
       });
+  }
+
+  getTeacherDetail(id: number) {
+    this.router.navigate(['/user-management/teacher-detail/', id]);
   }
 }

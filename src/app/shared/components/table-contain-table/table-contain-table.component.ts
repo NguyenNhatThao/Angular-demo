@@ -6,7 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-contain-table',
@@ -32,16 +32,17 @@ export class TableContainTableComponent implements OnInit {
   @Input() displayedChildColumns: any;
   @Input() hasPaging: any;
   @Output() onSelectPage = new EventEmitter<any>();
+  @Output() routeToDetail = new EventEmitter<number>();
 
   pageSize = 2;
   pageSizeOptions = [2, 3, 4, 5, 6];
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit() {}
 
-  getUserDetail(id: number) {
-    this.router.navigate(['/user-management/user-detail/', id]);
+  goToDetail(id: number) {
+    this.routeToDetail.emit(id);
   }
 
   onPageChange(event: any) {

@@ -4,7 +4,7 @@
       <ng-container *ngIf="column === 'edit'" else otherColumn>
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let data">
-          <mat-icon (click)="getUserDetail(data.id)">edit</mat-icon>
+          <mat-icon (click)="goToDetail(data.id)">edit</mat-icon>
         </mat-cell>
       </ng-container>
 

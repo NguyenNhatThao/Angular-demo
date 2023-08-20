@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { TableContainTableComponent } from './components/table-contain-table/table-contain-table.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const materialLib = [
   MatPaginatorModule,
@@ -52,7 +53,7 @@ const materialLib = [
     TableContainTableComponent,
     UserEditComponent,
   ],
-  imports: [...materialLib, CommonModule, ReactiveFormsModule],
+  imports: [...materialLib, CommonModule, ReactiveFormsModule, FlexLayoutModule],
   exports: [
     ...materialLib,
     ScoreStatusPipe,
@@ -61,6 +62,7 @@ const materialLib = [
     CommonModule,
     ReactiveFormsModule,
     TableContainTableComponent,
+    UserEditComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin } from 'rxjs';
 import { UserManagementService } from '../../user-management.service';
 import { ScoreStatusPipe } from 'src/app/shared/pipes/score.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-list',
@@ -14,10 +15,9 @@ export class StudentList implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
   totalRecords = 0;
   pageSize = 2;
-  listClass: any;
   scoreStattusPipe = new ScoreStatusPipe();
 
-  constructor(private userManagementService: UserManagementService) {}
+  constructor(private userManagementService: UserManagementService, private router: Router) {}
 
   ngOnInit() {
     forkJoin([
@@ -25,7 +25,6 @@ export class StudentList implements OnInit {
       this.userManagementService.getAllClass(),
     ]).subscribe((res: any) => {
       if (res) {
-        this.listClass = res[1];
         this.totalRecords = res[0].length;
         this.onPageChange({ pageIndex: 0, pageSize: this.pageSize });
       }
@@ -57,5 +56,9 @@ export class StudentList implements OnInit {
           }
         });
     });
+  }
+
+  getStudentDetail(id: number) {
+    this.router.navigate(['/user-management/student-detail/', id]);
   }
 }

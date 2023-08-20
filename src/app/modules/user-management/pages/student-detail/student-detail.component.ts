@@ -9,8 +9,8 @@ import { forkJoin } from 'rxjs';
   templateUrl: './student-detail.component.html',
   styleUrls: ['./student-detail.component.scss'],
 })
-export class UserDetail implements OnInit {
-  private studentInfo: any;
+export class StudentDetail implements OnInit {
+  public studentInfo: any;
   public allClass: any[] = [];
   public studentForm: FormGroup = new FormGroup({
     name: new FormControl('', [
@@ -19,7 +19,7 @@ export class UserDetail implements OnInit {
     ]),
     age: new FormControl(0, [this.validateAge]),
     score: new FormControl(0, [this.validateScore]),
-    selectedClass: new FormControl(0, [Validators.required]),
+    selected: new FormControl(0, [Validators.required]),
   });
   constructor(
     private route: ActivatedRoute,
@@ -34,8 +34,17 @@ export class UserDetail implements OnInit {
       this.userManagementService.getAllClass(),
     ]).subscribe((res: any) => {
       if (res) {
-        this.studentInfo = res[0];
         this.allClass = res[1];
+        this.studentInfo = {
+          name: res[0].name,
+          age: res[0].age,
+          score: res[0].score,
+          class: {
+            selected: res[0].selectedClass,
+            type: 'multiSelect',
+            options: this.allClass,
+          }
+        };
         this.getInitForm();
       }
     });
@@ -55,32 +64,36 @@ export class UserDetail implements OnInit {
     this.studentForm.get('age')?.setValue(this.studentInfo.age);
     this.studentForm.get('score')?.setValue(this.studentInfo.score);
     this.studentForm
-      .get('selectedClass')
-      ?.setValue(this.studentInfo.selectedClass);
+      .get('selected')
+      ?.setValue(this.studentInfo.class.selected);
   }
 
-  onSubmit() {
-    this.userManagementService
-      .updateStudent(this.studentInfo.id, this.studentForm.value)
+  onSubmit(studentForm: any) {
+    if (studentForm?.value) {
+      studentForm.value.selectedClass = studentForm.get('selected').value;
+      delete studentForm.value.selected;
+      this.userManagementService
+      .updateStudent(this.getStudentIdFromUrl(), studentForm.value)
       .subscribe((student) => {
         this.studentInfo = student;
         this.router.navigate(['/user-management/student']);
       });
+    }
   }
 
   validateAge(control: any) {
     const age = control.value;
 
     if (!age || age === '') {
-      return { required: true };
+      return { required: true, message: "Age is required" };
     }
 
     if (parseInt(age) < 6 || parseInt(age) > 100) {
-      return { ageRange: true };
+      return { ageRange: true, message: "Age is between 6 to 100 years old" };
     }
 
     if (!/^\d+$/.test(age)) {
-      return { pattern: true };
+      return { pattern: true, message: "Age is decimal number" };
     }
 
     return null;
@@ -89,15 +102,15 @@ export class UserDetail implements OnInit {
   validateScore(control: any) {
     const score = control.value;
     if (!score || score === '') {
-      return { required: true };
+      return { required: true, message:  "Score is required"};
     }
 
     if (parseInt(score) < 0 || parseInt(score) > 10) {
-      return { scoreRange: true };
+      return { scoreRange: true, message: "Score is between 0 to 10" };
     }
 
     if (!/^[0-9.]+$/.test(score)) {
-      return { pattern: true };
+      return { pattern: true, message: "Score is a number" };
     }
 
     return null;
