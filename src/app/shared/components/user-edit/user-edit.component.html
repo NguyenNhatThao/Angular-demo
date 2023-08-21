@@ -7,8 +7,10 @@
           <ng-container *ngIf="isObject(field.value)">
             <div *ngIf="getValue(field.value).type === 'multiSelect'">
               <div *ngFor="let fieldChild of getValue(field.value) | keyvalue">
-                <select *ngIf="getValue(fieldChild.key) === 'selected'"  id="{{field.key}}" [formControlName]="getFieldValue(fieldChild.key)">
-                  <option *ngFor="let option of getValue(field.value).options" [value]="getFieldValue(option.id)" [selected]="option.id == userForm.get('selected').value">
+                <select *ngIf="getValue(fieldChild.key) === 'selected'" id="{{field.key}}"
+                  [formControlName]="getFieldValue(fieldChild.key)">
+                  <option *ngFor="let option of getValue(field.value).options" [value]="getFieldValue(option.id)"
+                    [selected]="option.id == userForm.get('selected').value">
                     {{ option.subject }}
                   </option>
                 </select>
@@ -16,28 +18,16 @@
             </div>
 
             <div *ngIf="getValue(field.value).type === 'checkbox'">
-              <div *ngFor="let fieldChild of getValue(field.value) | keyvalue">
-                <div *ngIf="getValue(fieldChild.key) === 'selected'">
-                  <div *ngFor="let option of getValue(field.value).options">
-                    <label>
-                      <input type="checkbox" [formControlName]="getFieldValue(fieldChild.key)"
-                      [checked]="userForm.get('selected').value.includes(option.id)">
-                      {{option.subject}}
-                    </label>
-                  </div>
+              <div formArrayName="selected">
+                <div *ngFor="let item of getValue(field.value).options; let i = index">
+                  <input type="checkbox" [value]="item.id" [formControlName]="(i)" />{{item.subject}}
                 </div>
               </div>
-                
-              <!-- <select *ngIf="getValue(fieldChild.key) === 'selected'"  id="{{field.key}}" [formControlName]="getFieldValue(fieldChild.key)">
-                <option *ngFor="let option of getValue(field.value).options" [value]="getFieldValue(option.id)" [selected]="option.id == userForm.get('selected').value">
-                  {{ option.subject }}
-                </option>
-              </select> -->
             </div>
           </ng-container>
 
           <ng-container *ngIf="!isObject(field.value)">
-            <input type="text" id="{{field.key}}" [formControlName]="getFieldValue(field.key)"/>
+            <input type="text" id="{{field.key}}" [formControlName]="getFieldValue(field.key)" />
           </ng-container>
           <div *ngIf="
             userForm.get(field.key)?.touched || userForm.get(field.key)?.dirty
