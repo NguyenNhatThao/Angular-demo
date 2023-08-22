@@ -6,7 +6,6 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-contain-table',
@@ -29,7 +28,7 @@ export class TableContainTableComponent implements OnInit {
   @Input() totalRecords = 0;
   @Input() headerColumns: any;
   @Input() displayedChildColumns: any;
-  @Input() hasPaging: any;
+  @Input() hasPaging = true;
   @Output() onSelectPage = new EventEmitter<any>();
   @Output() routeToDetail = new EventEmitter<number>();
 

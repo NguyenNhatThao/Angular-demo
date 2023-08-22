@@ -13,12 +13,14 @@ export class TeacherList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'classes', 'edit'];
   displayedChildColumns: string[] = ['name', 'age', 'score', 'class'];
-  headerChildColumns: string[] = ['Name', 'Age', 'Score', 'Class'];
   totalRecords = 0;
   pageSize = 2;
   scoreStattusPipe = new ScoreStatusPipe();
 
-  constructor(private userManagementService: UserManagementService, private router: Router) {}
+  constructor(
+    private userManagementService: UserManagementService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userManagementService.getAllTeacher().subscribe((res: any) => {
@@ -76,5 +78,7 @@ export class TeacherList implements OnInit {
     this.router.navigate(['/user-management/teacher-detail/', id]);
   }
 
-  createNewTeacher() {}
+  createNewTeacher() {
+    this.router.navigate(['/user-management/new-teacher']);
+  }
 }

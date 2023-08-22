@@ -60,4 +60,12 @@ export class UserManagementService {
   updateTeacher(teacherId: number, teacherInfo: any) {
     return this.http.put(`${this.baseUrl}/teachers/${teacherId}`, teacherInfo);
   }
+
+  createNewStudent(studentInfo: any) {
+    return this.http.post(`${this.baseUrl}/students`, studentInfo);
+  }
+
+  createNewTeacher(teacherInfo: any) {
+    return this.http.post(`${this.baseUrl}/teachers`, teacherInfo);
+  }
 }

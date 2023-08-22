@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserManagementService } from '../../user-management.service';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
-import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
+import { UserManagementService } from '../../user-management.service';
 
 @Component({
-  selector: 'app-teacher-detail',
-  templateUrl: './teacher-detail.component.html',
-  styleUrls: ['./teacher-detail.component.scss'],
+  selector: 'app-new-teacher',
+  templateUrl: './new-teacher.component.html',
+  styleUrls: ['./new-teacher.component.scss'],
 })
-export class TeacherDetail implements OnInit {
+export class NewTeacher implements OnInit {
   public teacherInfo: any;
   public allClass: any[] = [];
   public teacherForm: FormGroup = new FormGroup({
@@ -17,23 +16,18 @@ export class TeacherDetail implements OnInit {
     selected: new FormArray([]),
   });
   constructor(
-    private route: ActivatedRoute,
     private userManagementService: UserManagementService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    const teacherId = this.getTeacherIdFromUrl();
-    forkJoin([
-      this.userManagementService.getTeacher(teacherId),
-      this.userManagementService.getAllClass(),
-    ]).subscribe((res: any) => {
+    this.userManagementService.getAllClass().subscribe((res: any) => {
       if (res) {
-        this.allClass = res[1];
+        this.allClass = res;
         this.teacherInfo = {
-          name: res[0].name,
+          name: '',
           class: {
-            selected: res[0].listClass,
+            selected: [],
             type: 'checkbox',
             options: this.allClass,
           },
@@ -44,26 +38,12 @@ export class TeacherDetail implements OnInit {
     this.teacherForm.valueChanges.subscribe((newValue: any) => {});
   }
 
-  getTeacherIdFromUrl(): number {
-    let teacherId = 0;
-    this.route.params.subscribe((params) => {
-      teacherId = params['id'];
-    });
-    return teacherId;
-  }
-
   getInitForm() {
     this.teacherForm.get('name')?.setValue(this.teacherInfo.name);
-    this.allClass.forEach((item) => {
-      if (this.teacherInfo.class.selected.includes(item.id)) {
-        (this.teacherForm.get('selected') as FormArray).push(
-          new FormControl(true)
-        );
-      } else {
-        (this.teacherForm.get('selected') as FormArray).push(
-          new FormControl(false)
-        );
-      }
+    this.allClass.forEach(() => {
+      (this.teacherForm.get('selected') as FormArray).push(
+        new FormControl(false)
+      );
     });
   }
 
@@ -76,10 +56,9 @@ export class TeacherDetail implements OnInit {
         })
         .filter((item: any) => typeof item === 'number');
       console.log(teacherForm?.value.listClass);
-      // teacherForm.value.listClass = teacherForm.get('selected').value;
       delete teacherForm.value.selected;
       this.userManagementService
-        .updateTeacher(this.getTeacherIdFromUrl(), teacherForm.value)
+        .createNewTeacher(teacherForm.value)
         .subscribe((teacher) => {
           this.teacherInfo = teacher;
           this.router.navigate(['/user-management/teacher']);

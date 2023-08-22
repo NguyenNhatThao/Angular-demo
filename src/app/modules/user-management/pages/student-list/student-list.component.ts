@@ -17,7 +17,10 @@ export class StudentList implements OnInit {
   pageSize = 2;
   scoreStattusPipe = new ScoreStatusPipe();
 
-  constructor(private userManagementService: UserManagementService, private router: Router) {}
+  constructor(
+    private userManagementService: UserManagementService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     forkJoin([
@@ -60,5 +63,9 @@ export class StudentList implements OnInit {
 
   getStudentDetail(id: number) {
     this.router.navigate(['/user-management/student-detail/', id]);
+  }
+
+  createNewStudent() {
+    this.router.navigate(['/user-management/new-student']);
   }
 }

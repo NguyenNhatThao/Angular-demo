@@ -25,6 +25,7 @@ import { TableContainTableComponent } from './components/table-contain-table/tab
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const materialLib = [
   MatPaginatorModule,
@@ -44,6 +45,7 @@ const materialLib = [
   MatNativeDateModule,
   MatButtonModule,
   MatListModule,
+  MatExpansionModule,
 ];
 
 @NgModule({
@@ -55,7 +57,12 @@ const materialLib = [
     UserEditComponent,
     CreateUserComponent,
   ],
-  imports: [...materialLib, CommonModule, ReactiveFormsModule, FlexLayoutModule],
+  imports: [
+    ...materialLib,
+    CommonModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+  ],
   exports: [
     ...materialLib,
     ScoreStatusPipe,
@@ -65,7 +72,7 @@ const materialLib = [
     ReactiveFormsModule,
     TableContainTableComponent,
     UserEditComponent,
-    CreateUserComponent
+    CreateUserComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

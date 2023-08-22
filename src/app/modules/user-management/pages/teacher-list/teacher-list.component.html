@@ -3,5 +3,5 @@
 </div>
 <app-table-contain-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
   (onSelectPage)="onPageChange($event)" [displayedChildColumns]="displayedChildColumns"
-  [hasPaging]="true" (routeToDetail)="getTeacherDetail($event)">
+  (routeToDetail)="getTeacherDetail($event)">
 </app-table-contain-table>

@@ -34,51 +34,49 @@
       "age": 24,
       "score": 5,
       "selectedClass": 2
+    },
+    {
+      "name": "Thao",
+      "age": "23",
+      "score": "1",
+      "selectedClass": "2",
+      "id": 6
     }
   ],
   "classes": [
     {
       "id": 1,
-      "subject": "Math",
-      "listStudent": [
-        1,
-        4
-      ],
-      "teacher": 2
+      "subject": "Math"
     },
     {
       "id": 2,
-      "subject": "English",
-      "listStudent": [
-        2,
-        5
-      ],
-      "teacher": 2
+      "subject": "English"
     },
     {
       "id": 3,
-      "subject": "History",
-      "listStudent": [
-        3
-      ],
-      "teacher": 1
+      "subject": "History"
     }
   ],
   "teachers": [
     {
       "name": "Kelvin",
-      "listClass": [
-        1,
-        2
-      ],
+      "listClass": [1, 2],
       "id": 1
     },
     {
       "name": "Miami",
-      "listClass": [
-        3
-      ],
+      "listClass": [3],
       "id": 2
+    },
+    {
+      "name": "Nhat Thao",
+      "listClass": [2],
+      "id": 3
+    },
+    {
+      "name": "Nguyen Thao",
+      "listClass": [1, 2, 3],
+      "id": 4
     }
   ]
 }

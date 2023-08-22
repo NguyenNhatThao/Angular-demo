@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 import { UserManagementService } from '../../user-management.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-student-detail',
-  templateUrl: './student-detail.component.html',
-  styleUrls: ['./student-detail.component.scss'],
+  selector: 'app-new-student',
+  templateUrl: './new-student.component.html',
+  styleUrls: ['./new-student.component.scss'],
 })
-export class StudentDetail implements OnInit {
+export class NewStudent implements OnInit {
   public studentInfo: any;
   public allClass: any[] = [];
   public studentForm: FormGroup = new FormGroup({
@@ -19,25 +18,20 @@ export class StudentDetail implements OnInit {
     selected: new FormControl(0),
   });
   constructor(
-    private route: ActivatedRoute,
     private userManagementService: UserManagementService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    const studentId = this.getStudentIdFromUrl();
-    forkJoin([
-      this.userManagementService.getStudent(studentId),
-      this.userManagementService.getAllClass(),
-    ]).subscribe((res: any) => {
+    this.userManagementService.getAllClass().subscribe((res: any) => {
       if (res) {
-        this.allClass = res[1];
+        this.allClass = res;
         this.studentInfo = {
-          name: res[0].name,
-          age: res[0].age,
-          score: res[0].score,
+          name: '',
+          age: '',
+          score: '',
           class: {
-            selected: res[0].selectedClass,
+            selected: 0,
             type: 'multiSelect',
             options: this.allClass,
           },
@@ -46,14 +40,6 @@ export class StudentDetail implements OnInit {
       }
     });
     this.studentForm.valueChanges.subscribe((newValue: any) => {});
-  }
-
-  getStudentIdFromUrl(): number {
-    let studentId = 0;
-    this.route.params.subscribe((params) => {
-      studentId = params['id'];
-    });
-    return studentId;
   }
 
   getInitForm() {
@@ -68,7 +54,7 @@ export class StudentDetail implements OnInit {
       studentForm.value.selectedClass = studentForm.get('selected').value;
       delete studentForm.value.selected;
       this.userManagementService
-        .updateStudent(this.getStudentIdFromUrl(), studentForm.value)
+        .createNewStudent(studentForm.value)
         .subscribe((student) => {
           this.studentInfo = student;
           this.router.navigate(['/user-management/student']);
@@ -125,5 +111,9 @@ export class StudentDetail implements OnInit {
     }
 
     return null;
+  }
+
+  createNewTeacher() {
+    this.router.navigate(['/user-management/new-teacher']);
   }
 }
