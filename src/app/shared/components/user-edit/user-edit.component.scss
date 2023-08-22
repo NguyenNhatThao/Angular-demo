@@ -2,10 +2,14 @@
     padding: 15px;
 }
 
-input, select {
+.text-input, select {
     border: 1px solid #ccc;
     padding: 5px;
     border-radius: 5px;
     height: 34px;
     width: 100%;
+}
+
+.checkbox-label {
+    margin-top: 4px;
 }

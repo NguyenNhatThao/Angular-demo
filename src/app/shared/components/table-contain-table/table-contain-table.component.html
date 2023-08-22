@@ -24,7 +24,7 @@
           <div fxLayout="column" fxLayoutAlign="space-around center" class="child-table">
             <mat-subheader class="header-child-tabel">Students of {{ element.name }}</mat-subheader>
             <app-table-contain-table [displayedColumns]="displayedChildColumns" [dataSource]="element.listStudent"
-              [headerColumns]="headerChildColumns" [hasPaging]="false"></app-table-contain-table>
+              [hasPaging]="false"></app-table-contain-table>
           </div>
         </ng-container>
       </mat-cell>

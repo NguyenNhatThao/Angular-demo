@@ -30,4 +30,8 @@ export class UserEditComponent {
   getValue(value: any) {
     return value;
   }
+
+  capitalize(name: any) {
+    return name[0].toUpperCase() + name.slice(1);
+  }
 }

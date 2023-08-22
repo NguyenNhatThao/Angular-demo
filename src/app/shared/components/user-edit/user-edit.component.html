@@ -2,7 +2,7 @@
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="40px">
     <div fxLayout="column" fxLayoutGap="15px" *ngFor="let field of userInfo | keyvalue">
       <div fxLayout="row" fxLayoutAlign="start center">
-        <label fxFlex="10" for="{{field.key}}">{{field.key}}</label>
+        <label fxFlex="10" for="{{field.key}}">{{capitalize(field.key)}}</label>
         <div fxFlex="80" fxLayout="column" fxLayoutGap="5px">
           <ng-container *ngIf="isObject(field.value)">
             <div *ngIf="getValue(field.value).type === 'multiSelect'">
@@ -20,14 +20,19 @@
             <div *ngIf="getValue(field.value).type === 'checkbox'">
               <div formArrayName="selected">
                 <div *ngFor="let item of getValue(field.value).options; let i = index">
-                  <input type="checkbox" [value]="item.id" [formControlName]="(i)" />{{item.subject}}
+                  <div fxLayout="row">
+                    <div class="checkbox-label" fxFlex="10">
+                      {{item.subject}}
+                    </div>
+                    <input fxFlex="10" type="checkbox" [value]="item.id" [formControlName]="i" />
+                  </div>
                 </div>
               </div>
             </div>
           </ng-container>
 
           <ng-container *ngIf="!isObject(field.value)">
-            <input type="text" id="{{field.key}}" [formControlName]="getFieldValue(field.key)" />
+            <input class="text-input" type="text" id="{{field.key}}" [formControlName]="getFieldValue(field.key)" />
           </ng-container>
           <div *ngIf="
             userForm.get(field.key)?.touched || userForm.get(field.key)?.dirty

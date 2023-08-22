@@ -17,7 +17,7 @@ export class TeacherDetail implements OnInit {
       Validators.required,
       Validators.pattern('^[a-zA-Z ]+$'),
     ]),
-    selected: new FormArray([], [Validators.required]),
+    selected: new FormArray([]),
   });
   constructor(
     private route: ActivatedRoute,

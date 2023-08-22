@@ -24,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { TableContainTableComponent } from './components/table-contain-table/table-contain-table.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 const materialLib = [
   MatPaginatorModule,
@@ -52,6 +53,7 @@ const materialLib = [
     LastClickDirective,
     TableContainTableComponent,
     UserEditComponent,
+    CreateUserComponent,
   ],
   imports: [...materialLib, CommonModule, ReactiveFormsModule, FlexLayoutModule],
   exports: [
@@ -62,7 +64,8 @@ const materialLib = [
     CommonModule,
     ReactiveFormsModule,
     TableContainTableComponent,
-    UserEditComponent
+    UserEditComponent,
+    CreateUserComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -19,7 +19,7 @@ export class StudentDetail implements OnInit {
     ]),
     age: new FormControl(0, [this.validateAge]),
     score: new FormControl(0, [this.validateScore]),
-    selected: new FormControl(0, [Validators.required]),
+    selected: new FormControl(0),
   });
   constructor(
     private route: ActivatedRoute,

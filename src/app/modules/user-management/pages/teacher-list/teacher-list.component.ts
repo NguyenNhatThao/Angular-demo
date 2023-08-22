@@ -75,4 +75,6 @@ export class TeacherList implements OnInit {
   getTeacherDetail(id: number) {
     this.router.navigate(['/user-management/teacher-detail/', id]);
   }
+
+  createNewTeacher() {}
 }

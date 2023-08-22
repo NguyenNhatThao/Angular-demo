@@ -1,4 +1,7 @@
+<div class="space-button" fxLayout="row" fxLayoutAlign="end center">
+  <button class="btn btn-primary" (click)="createNewTeacher()">Create New Teacher</button>
+</div>
 <app-table-contain-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
   (onSelectPage)="onPageChange($event)" [displayedChildColumns]="displayedChildColumns"
-  [headerChildColumns]="headerChildColumns" [hasPaging]="true" (routeToDetail)="getTeacherDetail($event)">
+  [hasPaging]="true" (routeToDetail)="getTeacherDetail($event)">
 </app-table-contain-table>

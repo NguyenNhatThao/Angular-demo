@@ -28,7 +28,6 @@ export class TableContainTableComponent implements OnInit {
   @Input() dataSource: any;
   @Input() totalRecords = 0;
   @Input() headerColumns: any;
-  @Input() headerChildColumns: any;
   @Input() displayedChildColumns: any;
   @Input() hasPaging: any;
   @Output() onSelectPage = new EventEmitter<any>();
