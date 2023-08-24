@@ -55,7 +55,7 @@ export class StudentList implements OnInit {
         .getClass(theStudent.selectedClass)
         .subscribe((theClass: any) => {
           if (theClass) {
-            theStudent.class = theClass.subject;
+            theStudent.class = theClass.name;
           }
         });
     });

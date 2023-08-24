@@ -46,37 +46,55 @@
   "classes": [
     {
       "id": 1,
-      "subject": "Math"
+      "name": "Math"
     },
     {
       "id": 2,
-      "subject": "English"
+      "name": "English"
     },
     {
       "id": 3,
-      "subject": "History"
+      "name": "History"
     }
   ],
   "teachers": [
     {
       "name": "Kelvin",
-      "listClass": [1, 2],
+      "listClass": [
+        1,
+        3
+      ],
       "id": 1
     },
     {
       "name": "Miami",
-      "listClass": [3],
+      "listClass": [
+        3
+      ],
       "id": 2
     },
     {
       "name": "Nhat Thao",
-      "listClass": [2],
+      "listClass": [
+        2
+      ],
       "id": 3
     },
     {
       "name": "Nguyen Thao",
-      "listClass": [1, 2, 3],
+      "listClass": [
+        1,
+        2,
+        3
+      ],
       "id": 4
+    },
+    {
+      "name": "Nguyen Nhat Thao",
+      "listClass": [
+        1
+      ],
+      "id": 5
     }
   ]
 }

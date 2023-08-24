@@ -11,7 +11,7 @@
                   [formControlName]="getFieldValue(fieldChild.key)">
                   <option *ngFor="let option of getValue(field.value).options" [value]="getFieldValue(option.id)"
                     [selected]="option.id == userForm.get('selected').value">
-                    {{ option.subject }}
+                    {{ option.name }}
                   </option>
                 </select>
               </div>
@@ -22,7 +22,7 @@
                 <div *ngFor="let item of getValue(field.value).options; let i = index">
                   <div fxLayout="row">
                     <div class="checkbox-label" fxFlex="10">
-                      {{item.subject}}
+                      {{item.name}}
                     </div>
                     <input fxFlex="10" type="checkbox" [value]="item.id" [formControlName]="i" />
                   </div>

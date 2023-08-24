@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserManagementService } from '../../user-management.service';
 import { ScoreStatusPipe } from 'src/app/shared/pipes/score.pipe';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-teacher-list',
@@ -16,6 +17,9 @@ export class TeacherList implements OnInit {
   totalRecords = 0;
   pageSize = 2;
   scoreStattusPipe = new ScoreStatusPipe();
+  listTeacher = [];
+  listClass = [];
+  listStudent = [];
 
   constructor(
     private userManagementService: UserManagementService,
@@ -23,23 +27,61 @@ export class TeacherList implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userManagementService.getAllTeacher().subscribe((res: any) => {
+    forkJoin([
+      this.userManagementService.getAllTeacher(),
+      this.userManagementService.getAllClass(),
+      this.userManagementService.getAllStudent(),
+    ]).subscribe((res: any) => {
       if (res) {
-        this.totalRecords = res.length;
+        this.listTeacher = res[0];
+        this.listClass = res[1];
+        this.listStudent = res[2];
+        this.totalRecords = res[0].length;
         this.onPageChange({ pageIndex: 0, pageSize: this.pageSize });
       }
     });
   }
 
   onPageChange(event: any) {
-    this.userManagementService
-      .getPagedData('teachers', event.pageIndex, event.pageSize)
-      .subscribe((res) => {
-        if (res) {
-          this.dataSource.data = res;
-          this.getClassesOfTeacher();
-        }
-      });
+    const startIndex = event.pageIndex * event.pageSize;
+    this.dataSource.data = this.listTeacher.slice(
+      startIndex,
+      startIndex + event.pageSize
+    );
+    this.getClassOfTeacher();
+  }
+
+  getClassOfTeacher() {
+    this.dataSource.data.forEach((teacher: any) => {
+      teacher.listStudent = [];
+      const classesOfTeacher: any[] = this.listClass.filter((theClass: any) =>
+        teacher.listClass.includes(theClass.id)
+      );
+
+      // classesOfTeacher.forEach((theClass) => {
+      //   console.log(theClass);
+
+      //   teacher.listStudent.push(this.getStudentsOfClass(theClass));
+      // });
+      // classesOfTeacher.forEach((theClass: any)=> {
+
+      // })
+      // this.userManagementService.getStudentsOfClass()
+
+      teacher.classes = classesOfTeacher
+        .map((theclass: any) => theclass.name)
+        .join(', ');
+    });
+  }
+
+  getStudentsOfClass(theClass: any) {
+    let listStudent: any[] = [];
+    this.listStudent.forEach((student: any) => {
+      if (student.selectedClass === theClass.id) {
+        listStudent.push({ ...student, class: theClass.name });
+      }
+    });
+    return listStudent;
   }
 
   getClassesOfTeacher() {
@@ -52,8 +94,8 @@ export class TeacherList implements OnInit {
           .subscribe((theClass: any) => {
             if (theClass) {
               teacher.classes = teacher.classes
-                ? teacher.classes.concat(', ', theClass.subject)
-                : theClass.subject;
+                ? teacher.classes.concat(', ', theClass.name)
+                : theClass.name;
               this.getStudentsDetailOfTeacher(teacher, theClass);
             }
           });
@@ -67,7 +109,7 @@ export class TeacherList implements OnInit {
       .subscribe((students: any) => {
         if (students) {
           students = students.map((student: any) => {
-            return { ...student, class: theClass.subject };
+            return { ...student, class: theClass.name };
           });
           teacher.listStudent = teacher.listStudent.concat(...students);
         }
