@@ -20,6 +20,8 @@ export class TeacherList implements OnInit {
   listTeacher = [];
   listClass = [];
   listStudent = [];
+  studentMap = new Map();
+  classMap = new Map();
 
   constructor(
     private userManagementService: UserManagementService,
@@ -48,73 +50,98 @@ export class TeacherList implements OnInit {
       startIndex,
       startIndex + event.pageSize
     );
-    this.getClassOfTeacher();
+    // this.getClassOfTeacher();
+    this.getInfoOfTeachers();
   }
 
-  getClassOfTeacher() {
-    this.dataSource.data.forEach((teacher: any) => {
-      teacher.listStudent = [];
-      const classesOfTeacher: any[] = this.listClass.filter((theClass: any) =>
-        teacher.listClass.includes(theClass.id)
-      );
+  // getClassOfTeacher() {
+  //   this.dataSource.data.forEach((teacher: any) => {
+  //     teacher.listStudent = [];
+  //     const listClass: any[] = [];
+  //     this.listClass.forEach((theClass: any) => {
+  //       if (teacher.listClass.includes(theClass.id)) {
+  //         listClass.push(theClass);
+  //         const studentsOfClass = this.getStudentsOfClass(theClass);
+  //         teacher.listStudent.push(...studentsOfClass);
+  //       }
+  //     });
+  //     teacher.classes = listClass
+  //       .map((theclass: any) => theclass.name)
+  //       .join(', ');
+  //   });
+  // }
 
-      // classesOfTeacher.forEach((theClass) => {
-      //   console.log(theClass);
-
-      //   teacher.listStudent.push(this.getStudentsOfClass(theClass));
-      // });
-      // classesOfTeacher.forEach((theClass: any)=> {
-
-      // })
-      // this.userManagementService.getStudentsOfClass()
-
-      teacher.classes = classesOfTeacher
-        .map((theclass: any) => theclass.name)
-        .join(', ');
-    });
-  }
-
-  getStudentsOfClass(theClass: any) {
-    let listStudent: any[] = [];
+  getListStudentInfo() {
     this.listStudent.forEach((student: any) => {
-      if (student.selectedClass === theClass.id) {
-        listStudent.push({ ...student, class: theClass.name });
-      }
-    });
-    return listStudent;
+      let studentList: any[] = this.studentMap.get(parseInt(student.selectedClass)) || [];
+      this.studentMap.set(parseInt(student.selectedClass), [...studentList, student]);
+    })
+    this.listClass.forEach((theClass: any) => {
+      this.classMap.set(theClass.id, theClass.name);
+      let listStudentOfClass = this.studentMap.get(parseInt(theClass.id));
+      listStudentOfClass = listStudentOfClass.map((student: any) => {
+        student.class = theClass.name;
+        return student;
+      });
+      this.studentMap.set(parseInt(theClass.id), listStudentOfClass);
+    })
   }
 
-  getClassesOfTeacher() {
+  getInfoOfTeachers() {
+    this.getListStudentInfo();
     this.dataSource.data.forEach((teacher: any) => {
-      teacher.classes = '';
       teacher.listStudent = [];
-      teacher.listClass.forEach((classId: number) => {
-        this.userManagementService
-          .getClassOfTeacher(classId)
-          .subscribe((theClass: any) => {
-            if (theClass) {
-              teacher.classes = teacher.classes
-                ? teacher.classes.concat(', ', theClass.name)
-                : theClass.name;
-              this.getStudentsDetailOfTeacher(teacher, theClass);
-            }
-          });
-      });
-    });
+      teacher.classes = '';
+      teacher.listClass.forEach((classId: any)=> {
+        teacher.listStudent = teacher.listStudent.concat(...this.studentMap.get(parseInt(classId)));
+        teacher.classes = teacher.classes
+                ? teacher.classes.concat(', ', this.classMap.get(parseInt(classId)))
+                : this.classMap.get(parseInt(classId));
+      })
+    })
   }
 
-  getStudentsDetailOfTeacher(teacher: any, theClass: any) {
-    this.userManagementService
-      .getStudentsOfClass(theClass.id)
-      .subscribe((students: any) => {
-        if (students) {
-          students = students.map((student: any) => {
-            return { ...student, class: theClass.name };
-          });
-          teacher.listStudent = teacher.listStudent.concat(...students);
-        }
-      });
-  }
+  // getStudentsOfClass(theClass: any): any[] {
+  //   let listStudent: any[] = [];
+  //   this.listStudent.forEach((student: any) => {
+  //     if (student.selectedClass === theClass.id) {
+  //       listStudent.push({ ...student, class: theClass.name });
+  //     }
+  //   });
+  //   return listStudent;
+  // }
+
+  // getClassesOfTeacher() {
+  //   this.dataSource.data.forEach((teacher: any) => {
+  //     teacher.classes = '';
+  //     teacher.listStudent = [];
+  //     teacher.listClass.forEach((classId: number) => {
+  //       this.userManagementService
+  //         .getClassOfTeacher(classId)
+  //         .subscribe((theClass: any) => {
+  //           if (theClass) {
+  //             teacher.classes = teacher.classes
+  //               ? teacher.classes.concat(', ', theClass.name)
+  //               : theClass.name;
+  //             this.getStudentsDetailOfTeacher(teacher, theClass);
+  //           }
+  //         });
+  //     });
+  //   });
+  // }
+
+  // getStudentsDetailOfTeacher(teacher: any, theClass: any) {
+  //   this.userManagementService
+  //     .getStudentsOfClass(theClass.id)
+  //     .subscribe((students: any) => {
+  //       if (students) {
+  //         students = students.map((student: any) => {
+  //           return { ...student, class: theClass.name };
+  //         });
+  //         teacher.listStudent = teacher.listStudent.concat(...students);
+  //       }
+  //     });
+  // }
 
   getTeacherDetail(id: number) {
     this.router.navigate(['/user-management/teacher-detail/', id]);
