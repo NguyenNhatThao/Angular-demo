@@ -2,4 +2,5 @@
   <button class="btn btn-primary" (click)="createNewStudent()">Create New Student</button>
 </div>
 <app-table-contain-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
-  (onSelectPage)="onPageChange($event)" (routeToDetail)="getStudentDetail($event)"></app-table-contain-table>
+  (onSelectPage)="onPageChange($event)" (routeToDetail)="getStudentDetail($event)"
+  [typeMainColumns]="typeColumns"></app-table-contain-table>

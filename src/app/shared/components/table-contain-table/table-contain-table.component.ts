@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Constants } from '../../constants/constants';
 
 @Component({
   selector: 'app-table-contain-table',
@@ -29,8 +30,10 @@ export class TableContainTableComponent implements OnInit {
   @Input() headerColumns: any;
   @Input() displayedChildColumns: any;
   @Input() hasPaging = true;
+  @Input() typeMainColumns: any[] = [];
   @Output() onSelectPage = new EventEmitter<any>();
   @Output() routeToDetail = new EventEmitter<number>();
+  constants = Constants;
 
   pageSize = 2;
   pageSizeOptions = [2, 3, 4, 5, 6];

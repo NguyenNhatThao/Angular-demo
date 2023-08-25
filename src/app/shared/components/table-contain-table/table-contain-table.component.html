@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-around center">
   <mat-table matSort style="width: 100%" [dataSource]="dataSource" multiTemplateDataRows>
     <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
-      <ng-container *ngIf="column === 'edit'" else otherColumn>
+      <ng-container *ngIf="typeMainColumns[i] === constants.EDIT" else otherColumn>
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let data" fxLayout="row" fxLayoutAlign="space-around center">
           <mat-icon (click)="goToDetail(data.id)">edit</mat-icon>
@@ -24,8 +24,8 @@
       <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
         <ng-container *ngIf="element.isExpanded">
           <div fxLayout="column" fxLayoutAlign="space-around center" class="child-table">
-            <mat-subheader class="header-child-tabel">Students of {{ element.name }}</mat-subheader>
-            <app-table-contain-table [displayedColumns]="displayedChildColumns" [dataSource]="element.listStudent"
+            <mat-subheader class="header-child-tabel">Members of {{ element.name }}</mat-subheader>
+            <app-table-contain-table [displayedColumns]="displayedChildColumns" [dataSource]="element.childDataSource"
               [hasPaging]="false"></app-table-contain-table>
           </div>
         </ng-container>

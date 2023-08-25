@@ -4,6 +4,7 @@ import { forkJoin } from 'rxjs';
 import { UserManagementService } from '../../user-management.service';
 import { ScoreStatusPipe } from 'src/app/shared/pipes/score.pipe';
 import { Router } from '@angular/router';
+import { Constants } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-student-list',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class StudentList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
+  typeColumns = ['number', 'string', 'string', Constants.EDIT];
   totalRecords = 0;
   pageSize = 2;
   scoreStattusPipe = new ScoreStatusPipe();

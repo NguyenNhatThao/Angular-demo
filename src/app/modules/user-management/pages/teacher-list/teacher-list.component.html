@@ -1,7 +1,13 @@
+<div>
+  <label class="font-weight-bold" translate>Search By Teacher Name</label>
+  <input type="text" class="form-control input-field" (ngModelChange)="onChangeSearchTeacher($event)">
+</div>
+
 <div class="space-button" fxLayout="row" fxLayoutAlign="end center">
   <button class="btn btn-primary" (click)="createNewTeacher()">Create New Teacher</button>
 </div>
+
 <app-table-contain-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
   (onSelectPage)="onPageChange($event)" [displayedChildColumns]="displayedChildColumns"
-  (routeToDetail)="getTeacherDetail($event)">
+  (routeToDetail)="getTeacherDetail($event)" [typeMainColumns]="typeColumns">
 </app-table-contain-table>
