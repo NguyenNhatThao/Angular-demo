@@ -5,7 +5,7 @@
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let data" fxLayout="row" fxLayoutAlign="space-around center">
           <mat-icon (click)="goToDetail(data.id)">edit</mat-icon>
-          <mat-icon *ngIf="displayedChildColumns" (click)="selectRow(data)">{{data.isExpanded ? 'keyboard_arrow_up' :
+          <mat-icon *ngIf="displayedChildColumns" (click)="selectRow(data.id)">{{data.isExpanded ? 'keyboard_arrow_up' :
             'keyboard_arrow_down'}}</mat-icon>
         </mat-cell>
       </ng-container>
@@ -26,14 +26,14 @@
           <div fxLayout="column" fxLayoutAlign="space-around center" class="child-table">
             <mat-subheader class="header-child-tabel">Members of {{ element.name }}</mat-subheader>
             <app-table-contain-table [displayedColumns]="displayedChildColumns" [dataSource]="element.childDataSource"
-              [hasPaging]="false"></app-table-contain-table>
+            ></app-table-contain-table>
           </div>
         </ng-container>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns">
+    <mat-row [ngClass]="{'highlight': row.isHighlight}" *matRowDef="let row; columns: displayedColumns">
     </mat-row>
     <div *ngIf="displayedChildColumns">
       <mat-row *matRowDef="let row; columns: ['expandedDetail']"
@@ -42,7 +42,7 @@
     </div>
   </mat-table>
 </div>
-<div *ngIf="hasPaging">
+<div>
   <mat-paginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
     [pageSizeOptions]="pageSizeOptions" aria-label="Select page" showFirstLastButtons>
   </mat-paginator>

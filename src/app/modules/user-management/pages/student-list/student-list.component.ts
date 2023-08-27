@@ -14,7 +14,7 @@ import { Constants } from 'src/app/shared/constants/constants';
 export class StudentList implements OnInit {
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'name', 'age', 'score', 'class', 'edit'];
-  typeColumns = ['number', 'string', 'string', Constants.EDIT];
+  typeColumns = ['number', 'string', 'number', 'number', 'string', Constants.EDIT];
   totalRecords = 0;
   pageSize = 2;
   scoreStattusPipe = new ScoreStatusPipe();

@@ -1,13 +1,19 @@
-<div>
-  <label class="font-weight-bold" translate>Search By Teacher Name</label>
-  <input type="text" class="form-control input-field" (ngModelChange)="onChangeSearchTeacher($event)">
+<div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" class="space-field">
+  <div fxFlex="50">
+    <label class="font-weight-bold">Search By Teacher Name</label>
+    <input type="text" class="form-control" [(ngModel)]="teacherSearch" (ngModelChange)="onChangeSearchTeacher()">
+  </div>
+  <div fxFlex="50">
+    <label class="font-weight-bold">Search By Student Name</label>
+    <input type="text" class="form-control" [(ngModel)]="studentSearch" (ngModelChange)="onChangeSearchStudent()">
+  </div>
 </div>
 
-<div class="space-button" fxLayout="row" fxLayoutAlign="end center">
+<div class="space-field" fxLayout="row" fxLayoutAlign="end center">
   <button class="btn btn-primary" (click)="createNewTeacher()">Create New Teacher</button>
 </div>
 
 <app-table-contain-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
   (onSelectPage)="onPageChange($event)" [displayedChildColumns]="displayedChildColumns"
-  (routeToDetail)="getTeacherDetail($event)" [typeMainColumns]="typeColumns">
+  (routeToDetail)="getTeacherDetail($event)" [typeMainColumns]="typeColumns" [childsSearched]="studentsSearched">
 </app-table-contain-table>

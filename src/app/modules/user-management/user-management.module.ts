@@ -6,7 +6,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { UserManagementRoutingModule } from './user-management-routing.module';
 import { TeacherList } from './pages/teacher-list/teacher-list.component';
 import { UserManagementService } from './user-management.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherDetail } from './pages/teacher-detail/teacher-detail.component';
 import { NewTeacher } from './pages/new-teacher/new-teacher.component';
 import { NewStudent } from './pages/new-student/new-student.component';
@@ -15,6 +15,7 @@ import { NewStudent } from './pages/new-student/new-student.component';
   providers: [UserManagementService],
   imports: [
     ReactiveFormsModule,
+    FormsModule,
     FlexLayoutModule,
     SharedModule,
     UserManagementRoutingModule,

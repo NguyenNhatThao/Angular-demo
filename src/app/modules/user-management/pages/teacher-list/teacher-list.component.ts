@@ -24,6 +24,10 @@ export class TeacherList implements OnInit {
   listStudent = [];
   studentMapByClassId = new Map();
   classMapByClassId = new Map();
+  teacherSearch: any;
+  studentSearch: any;
+  curDataSource: any;
+  studentsSearched: any[] = [];
 
   constructor(
     private userManagementService: UserManagementService,
@@ -40,8 +44,8 @@ export class TeacherList implements OnInit {
         this.listTeacher = res[0];
         this.listClass = res[1];
         this.listStudent = res[2];
-        this.totalRecords = res[0].length;
         this.onPageChange({ pageIndex: 0, pageSize: this.pageSize });
+        this.totalRecords = res[0].length;
       }
     });
   }
@@ -53,10 +57,12 @@ export class TeacherList implements OnInit {
       startIndex + event.pageSize
     );
     this.getInfoOfTeachers();
+    this.curDataSource = this.dataSource.data;
+    this.onChangeSearchTeacher();
   }
 
   getListStudentInfo() {
-    // student1 - classA, student2 - classB, student3 - classA
+    this.studentMapByClassId = new Map();
     this.listStudent.forEach((student: any) => {
       let studentList: any[] =
         this.studentMapByClassId.get(parseInt(student.selectedClass)) || [];
@@ -65,6 +71,7 @@ export class TeacherList implements OnInit {
         student,
       ]);
     });
+    
     this.listClass.forEach((theClass: any) => {
       this.classMapByClassId.set(theClass.id, theClass.name);
       let listStudentOfClass = this.studentMapByClassId.get(
@@ -105,7 +112,25 @@ export class TeacherList implements OnInit {
     this.router.navigate(['/user-management/new-teacher']);
   }
 
-  onChangeSearchTeacher($event: any) {}
+  onChangeSearchTeacher() {
+    const listTeacher = this.curDataSource.filter((teacher: any) => teacher.name.toLowerCase()
+      .includes(this.teacherSearch?.toLowerCase()));
+    if (!this.teacherSearch) {
+      this.dataSource.data = this.curDataSource;
+    } else {
+      this.dataSource.data = listTeacher;
+    }
+    this.onChangeSearchStudent();
+  }
 
-  onChangeSearchStudent($event: any) {}
+  onChangeSearchStudent() {
+    this.studentsSearched = [];
+    if (this.studentSearch) {
+      this.dataSource.data.forEach((teacher: any) => {
+        const studentMatched = teacher.childDataSource.filter((student: any) => student.name.toLowerCase().includes(this.studentSearch.toLowerCase()))
+          .map((studentSearched: any) => { return {...studentSearched, parentId: teacher.id}});
+        this.studentsSearched = this.studentsSearched.concat(...studentMatched);
+      })
+    }
+  }
 }
