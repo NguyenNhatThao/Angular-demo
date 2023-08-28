@@ -42,7 +42,7 @@
     </div>
   </mat-table>
 </div>
-<div>
+<div *ngIf="displayedChildColumns">
   <mat-paginator [length]="totalRecords" [pageSize]="pageSize" (page)="onPageChange($event)"
     [pageSizeOptions]="pageSizeOptions" aria-label="Select page" showFirstLastButtons>
   </mat-paginator>
