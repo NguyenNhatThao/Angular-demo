@@ -55,7 +55,6 @@ export class NewTeacher implements OnInit {
           return item && index + 1;
         })
         .filter((item: any) => typeof item === 'number');
-      console.log(teacherForm?.value.listClass);
       delete teacherForm.value.selected;
       this.userManagementService
         .createNewTeacher(teacherForm.value)

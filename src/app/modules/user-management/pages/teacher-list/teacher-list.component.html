@@ -1,11 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px" class="space-field">
   <div fxFlex="50">
-    <label class="font-weight-bold">Search By Teacher Name</label>
-    <input type="text" class="form-control" [(ngModel)]="teacherSearch" (ngModelChange)="onChangeSearchTeacher()">
-  </div>
-  <div fxFlex="50">
-    <label class="font-weight-bold">Search By Student Name</label>
-    <input type="text" class="form-control" [(ngModel)]="studentSearch" (ngModelChange)="onChangeSearchStudent()">
+    <label class="font-weight-bold">Search By Name</label>
+    <input type="text" class="form-control" [(ngModel)]="searchName" (ngModelChange)="onChangeSearchByName()">
   </div>
 </div>
 
@@ -15,5 +11,5 @@
 
 <app-table-contain-table [displayedColumns]="displayedColumns" [dataSource]="dataSource" [totalRecords]="totalRecords"
   (onSelectPage)="onPageChange($event)" [displayedChildColumns]="displayedChildColumns"
-  (routeToDetail)="getTeacherDetail($event)" [typeMainColumns]="typeColumns" [childsSearched]="studentsSearched">
+  (routeToDetail)="getTeacherDetail($event)" [typeMainColumns]="typeColumns" (expandedRow)="onExpandedRow($event)">
 </app-table-contain-table>

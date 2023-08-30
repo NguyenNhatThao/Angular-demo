@@ -5,10 +5,10 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Constants } from '../../constants/constants';
-import { cloneDeep } from 'lodash';
 import * as _ from 'lodash';
+import { CustomDataSource } from '../custom-data-source';
 
 @Component({
   selector: 'app-table-contain-table',
@@ -25,33 +25,41 @@ import * as _ from 'lodash';
     ]),
   ],
 })
-export class TableContainTableComponent implements OnInit, OnChanges {
+export class TableContainTableComponent implements OnInit {
   @Input() displayedColumns: string[] = [];
-  @Input() dataSource: any;
+  @Input() dataSource!: CustomDataSource;
   @Input() totalRecords = 0;
   @Input() headerColumns: any;
   @Input() displayedChildColumns: any;
   @Input() typeMainColumns: any[] = [];
-  @Input() childsSearched: any;
   @Output() onSelectPage = new EventEmitter<any>();
   @Output() routeToDetail = new EventEmitter<number>();
+  @Output() expandedRow = new EventEmitter<number>();
   constants = Constants;
   dataSourceNotSearch: any;
   idsOfChildSearched: any[] = [];
+  dataOfDataSource: any[] = [];
+  dataOfChildData: any[] = [];
 
   pageSize = 2;
   pageSizeOptions = [2, 3, 4, 5, 6];
 
   constructor() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['childsSearched'] && !changes['childsSearched'].firstChange) {
-      this.idsOfChildSearched = this.getIdsOfChildSearched();
-      this.searchData();
-    }
+  ngOnInit() {
+    this.dataSource?.connect().subscribe((res: any) => {
+      if (res) {
+        this.dataOfDataSource = res;
+        res.forEach((parent: any) => {
+          parent.childDataSource?.connect().subscribe((child: any) => {
+            if (child) {
+              this.dataOfChildData.push(child);
+            }
+          });
+        });
+      }
+    });
   }
-
-  ngOnInit() {}
 
   goToDetail(id: number) {
     this.routeToDetail.emit(id);
@@ -65,44 +73,21 @@ export class TableContainTableComponent implements OnInit, OnChanges {
     });
   }
 
-  selectRow(id: any, isExpanded?: boolean) {
-    this.dataSource.data.forEach((data: any) => {
-      if (data.id === id) {
-        if (isExpanded !== undefined) {
-          data.isExpanded = isExpanded;
-        } else {
+  selectRow(id: any) {
+    if (this.dataOfDataSource) {
+      this.dataOfDataSource.forEach((data: any, index: number) => {
+        if (id === data.id) {
           data.isExpanded = !data.isExpanded;
-          this.dataSourceNotSearch = cloneDeep(this.dataSource.data);
+          data.childDataSource = new CustomDataSource();
+          data.childDataSource.loadData(this.dataOfChildData[index]);
+          this.dataSource.loadData(this.dataOfDataSource);
         }
-      }
-    })    
+      });
+    }
+    this.expandedRow.emit(id);
   }
 
   capitalize(name: string) {
     return name[0].toUpperCase() + name.slice(1);
-  }
-
-  searchData() {
-    if (this.dataSourceNotSearch) {        
-      this.dataSource.data = _.cloneDeep(this.dataSourceNotSearch);
-    } else {
-      this.dataSource.data = this.dataSource.data.map((data: any) => {return {...data, isExpanded: false}});
-    }
-    this.highlightChildRow();
-    this.childsSearched.forEach((child: any) => {
-      this.selectRow(child.parentId, true);
-    })
-  }
-
-  highlightChildRow() {
-    this.dataSource.data.forEach((parent: any) => {
-      parent.childDataSource = parent.childDataSource
-        .map((data: any) => { return {...data, isHighlight: this.idsOfChildSearched.includes(data.id)}});
-      })
-  }
-
-  getIdsOfChildSearched() {
-    const childSearched = this.childsSearched.map((childSearched: any) => { return childSearched.id});
-    return [... new Set(childSearched)];
   }
 }

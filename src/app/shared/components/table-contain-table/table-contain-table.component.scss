@@ -13,6 +13,10 @@ mat-icon {
   font-weight: bold;
 }
 
-.highlight {
+.highlight-parent {
   background-color: greenyellow;
+}
+
+.highlight-child {
+  background-color: aqua;
 }

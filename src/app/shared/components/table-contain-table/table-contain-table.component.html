@@ -33,7 +33,7 @@
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row [ngClass]="{'highlight': row.isHighlight}" *matRowDef="let row; columns: displayedColumns">
+    <mat-row [ngClass]="{'highlight-parent': displayedChildColumns && row.isHighlight, 'highlight-child': !displayedChildColumns && row.isHighlight}" *matRowDef="let row; columns: displayedColumns">
     </mat-row>
     <div *ngIf="displayedChildColumns">
       <mat-row *matRowDef="let row; columns: ['expandedDetail']"

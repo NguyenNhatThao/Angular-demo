@@ -75,7 +75,6 @@ export class TeacherDetail implements OnInit {
           return item && index + 1;
         })
         .filter((item: any) => typeof item === 'number');
-      console.log(teacherForm?.value.listClass);
       // teacherForm.value.listClass = teacherForm.get('selected').value;
       delete teacherForm.value.selected;
       this.userManagementService

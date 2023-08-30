@@ -5,6 +5,8 @@ import { ScoreStatusPipe } from 'src/app/shared/pipes/score.pipe';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { Constants } from 'src/app/shared/constants/constants';
+import { CustomDataSource } from 'src/app/shared/components/custom-data-source';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-teacher-list',
@@ -12,7 +14,7 @@ import { Constants } from 'src/app/shared/constants/constants';
   styleUrls: ['./teacher-list.component.scss'],
 })
 export class TeacherList implements OnInit {
-  dataSource = new MatTableDataSource<any>();
+  dataSource: CustomDataSource = new CustomDataSource();
   displayedColumns: string[] = ['id', 'name', 'classes', 'edit'];
   typeColumns = ['number', 'string', 'string', Constants.EDIT];
   displayedChildColumns: string[] = ['name', 'age', 'score', 'class'];
@@ -24,10 +26,9 @@ export class TeacherList implements OnInit {
   listStudent = [];
   studentMapByClassId = new Map();
   classMapByClassId = new Map();
-  teacherSearch: any;
-  studentSearch: any;
+  searchName: any;
   curDataSource: any;
-  studentsSearched: any[] = [];
+  curDataSourceFitered: any[] = [];
 
   constructor(
     private userManagementService: UserManagementService,
@@ -41,7 +42,8 @@ export class TeacherList implements OnInit {
       this.userManagementService.getAllStudent(),
     ]).subscribe((res: any) => {
       if (res) {
-        this.listTeacher = res[0];
+        // this.listTeacher = res[0];
+        this.curDataSource = res[0];
         this.listClass = res[1];
         this.listStudent = res[2];
         this.onPageChange({ pageIndex: 0, pageSize: this.pageSize });
@@ -52,13 +54,25 @@ export class TeacherList implements OnInit {
 
   onPageChange(event: any) {
     const startIndex = event.pageIndex * event.pageSize;
-    this.dataSource.data = this.listTeacher.slice(
+    // this.listTeacher.slice(
+    //   startIndex,
+    //   startIndex + event.pageSize
+    // );
+    this.userManagementService
+      .getPagedData('teachers', event.pageIndex, event.pageSize)
+      .subscribe((res: any) => {
+        if (res) {
+          this.listTeacher = res;
+          this.dataSource.loadData(this.listTeacher);
+          this.getInfoOfTeachers();
+          // this.curDataSource = _.cloneDeep(res);
+          this.onChangeSearchByName();
+        }
+      });
+    this.curDataSourceFitered = this.curDataSourceFitered.slice(
       startIndex,
       startIndex + event.pageSize
     );
-    this.getInfoOfTeachers();
-    this.curDataSource = this.dataSource.data;
-    this.onChangeSearchTeacher();
   }
 
   getListStudentInfo() {
@@ -71,7 +85,7 @@ export class TeacherList implements OnInit {
         student,
       ]);
     });
-    
+
     this.listClass.forEach((theClass: any) => {
       this.classMapByClassId.set(theClass.id, theClass.name);
       let listStudentOfClass = this.studentMapByClassId.get(
@@ -87,21 +101,25 @@ export class TeacherList implements OnInit {
 
   getInfoOfTeachers() {
     this.getListStudentInfo();
-    this.dataSource.data.forEach((teacher: any) => {
-      teacher.childDataSource = [];
+    this.listTeacher.forEach((teacher: any) => {
+      teacher.childDataSource = new CustomDataSource();
+      // teacher.childDataSource = [];
       teacher.classes = '';
+      let childList: any[] = [];
       teacher.listClass.forEach((classId: any) => {
-        teacher.childDataSource = teacher.childDataSource.concat(
+        childList = childList.concat(
           ...this.studentMapByClassId.get(parseInt(classId))
         );
         teacher.classes = teacher.classes
-          ? teacher.classes.concat(
-              ', ',
-              this.classMapByClassId.get(parseInt(classId))
-            )
+        ? teacher.classes.concat(
+          ', ',
+          this.classMapByClassId.get(parseInt(classId))
+          )
           : this.classMapByClassId.get(parseInt(classId));
       });
+      teacher.childDataSource.loadData(childList);
     });
+    this.curDataSourceFitered = _.cloneDeep(this.listTeacher);
   }
 
   getTeacherDetail(id: number) {
@@ -112,25 +130,62 @@ export class TeacherList implements OnInit {
     this.router.navigate(['/user-management/new-teacher']);
   }
 
-  onChangeSearchTeacher() {
-    const listTeacher = this.curDataSource.filter((teacher: any) => teacher.name.toLowerCase()
-      .includes(this.teacherSearch?.toLowerCase()));
-    if (!this.teacherSearch) {
-      this.dataSource.data = this.curDataSource;
+  onChangeSearchByName() {
+    const listTeacher = _.cloneDeep(this.listTeacher).filter((teacher: any) => {
+      if (
+        this.searchName &&
+        teacher.name.toLowerCase().includes(this.searchName.toLowerCase())
+      ) {
+        teacher.isHighlight = true;
+      } else {
+        teacher.isHighlight = false;
+      }
+      return this.searchStudent(teacher) || teacher.isHighlight;
+    });
+    if (!this.searchName) {
+      this.teacherFilteredWithCur();
+      this.dataSource.loadData(this.curDataSourceFitered);
     } else {
-      this.dataSource.data = listTeacher;
+      this.dataSource.loadData(listTeacher);
     }
-    this.onChangeSearchStudent();
   }
 
-  onChangeSearchStudent() {
-    this.studentsSearched = [];
-    if (this.studentSearch) {
-      this.dataSource.data.forEach((teacher: any) => {
-        const studentMatched = teacher.childDataSource.filter((student: any) => student.name.toLowerCase().includes(this.studentSearch.toLowerCase()))
-          .map((studentSearched: any) => { return {...studentSearched, parentId: teacher.id}});
-        this.studentsSearched = this.studentsSearched.concat(...studentMatched);
-      })
-    }
+  searchStudent(teacher: any) {
+    let hasStudentMatched = false;
+    teacher.childDataSource.connect().subscribe((listChild: any) => {
+      if (listChild) {
+        listChild.forEach((student: any) => {
+          if (
+            this.searchName &&
+            student.name.toLowerCase().includes(this.searchName?.toLowerCase())
+          ) {
+            student.isHighlight = true;
+            teacher.isExpanded = true;
+            hasStudentMatched = true;
+          } else {
+            student.isHighlight = false;
+          }
+        });
+      }
+    });
+    return hasStudentMatched;
+  }
+
+  onExpandedRow(id: number) {
+    this.curDataSource.forEach((teacher: any) => {
+      if (teacher.id === id) {
+        teacher.isExpanded = !teacher.isExpanded;
+      }
+    });
+  }
+
+  teacherFilteredWithCur() {
+    this.curDataSource.forEach((teacher: any) => {
+      this.curDataSourceFitered.forEach((teacherFiltered: any) => {
+        if (teacher.id === teacherFiltered.id) {
+          teacherFiltered.isExpanded = teacher.isExpanded;
+        }
+      });
+    });
   }
 }
