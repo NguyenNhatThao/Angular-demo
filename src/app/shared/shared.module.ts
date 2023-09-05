@@ -26,7 +26,6 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { SearchItemComponent } from './components/search-item/search-item.component';
 
 const materialLib = [
   MatPaginatorModule,
@@ -57,7 +56,6 @@ const materialLib = [
     TableContainTableComponent,
     UserEditComponent,
     CreateUserComponent,
-    SearchItemComponent,
   ],
   imports: [
     ...materialLib,
@@ -75,7 +73,6 @@ const materialLib = [
     TableContainTableComponent,
     UserEditComponent,
     CreateUserComponent,
-    SearchItemComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

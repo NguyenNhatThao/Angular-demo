@@ -8,7 +8,7 @@ import {
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Constants } from '../../constants/constants';
 import * as _ from 'lodash';
-import { CustomDataSource } from '../custom-data-source';
+import { CustomDataSource } from './custom-data-source';
 
 @Component({
   selector: 'app-table-contain-table',
@@ -28,7 +28,7 @@ import { CustomDataSource } from '../custom-data-source';
 export class TableContainTableComponent implements OnInit {
   @Input() displayedColumns: string[] = [];
   @Input() dataSource!: CustomDataSource;
-  @Input() totalRecords = 0;
+  @Input() totalRecords: any = 0;
   @Input() headerColumns: any;
   @Input() displayedChildColumns: any;
   @Input() typeMainColumns: any[] = [];
@@ -46,20 +46,7 @@ export class TableContainTableComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    this.dataSource?.connect().subscribe((res: any) => {
-      if (res) {
-        this.dataOfDataSource = res;
-        res.forEach((parent: any) => {
-          parent.childDataSource?.connect().subscribe((child: any) => {
-            if (child) {
-              this.dataOfChildData.push(child);
-            }
-          });
-        });
-      }
-    });
-  }
+  ngOnInit() {}
 
   goToDetail(id: number) {
     this.routeToDetail.emit(id);
@@ -74,16 +61,6 @@ export class TableContainTableComponent implements OnInit {
   }
 
   selectRow(id: any) {
-    if (this.dataOfDataSource) {
-      this.dataOfDataSource.forEach((data: any, index: number) => {
-        if (id === data.id) {
-          data.isExpanded = !data.isExpanded;
-          data.childDataSource = new CustomDataSource();
-          data.childDataSource.loadData(this.dataOfChildData[index]);
-          this.dataSource.loadData(this.dataOfDataSource);
-        }
-      });
-    }
     this.expandedRow.emit(id);
   }
 
